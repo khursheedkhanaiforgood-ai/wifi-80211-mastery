@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 3 — Security Beyond the Handshake | 802.11 Mastery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #9d174d; padding: 1.5rem 2rem 1rem; max-width: 900px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #9d174d; }
+    h1 { font-size: 1.9rem; font-weight: 700; margin: 0.3rem 0 0.4rem; }
+    .deck { font-size: 1rem; color: #444; font-style: italic; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; } nav a:hover { text-decoration: underline; }
+    main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #9d174d; border-top: 3px solid #9d174d; padding-top: 0.4rem; margin: 2.5rem 0 1rem; }
+    .day-card { border: 1px solid #e0e0e0; border-left: 4px solid #9d174d; background: #fff; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; }
+    .day-card .day-num { font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #9d174d; font-weight: 600; margin-bottom: 0.3rem; }
+    .day-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .prereq { display: inline-block; background: #fff1f2; border: 1px solid #fecdd3; color: #9f1239; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.8rem; }
+    .block-label { font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #555; margin: 1rem 0 0.3rem; }
+    .socratic { background: #fff1f2; border-left: 3px solid #9d174d; padding: 0.8rem 1rem; margin: 0.5rem 0; font-style: italic; font-size: 0.92rem; color: #333; }
+    .lab-box { background: #fff1f2; border: 1px solid #fecdd3; padding: 0.8rem 1rem; margin: 0.5rem 0; font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; }
+    .lab-box .lab-title { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.08em; color: #9d174d; margin-bottom: 0.4rem; }
+    code { font-family: 'SF Mono', 'Fira Mono', monospace; font-size: 0.82rem; background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 2px; }
+    .reading { font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; color: #555; }
+    .reading strong { color: #1a1a1a; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 900px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">Phase 3 &nbsp;&bull;&nbsp; Security Beyond the Handshake &nbsp;&bull;&nbsp; 6 days &nbsp;&bull;&nbsp; ~10 hours</p>
+  <h1>Security Beyond the Handshake</h1>
+  <p class="deck">Starting where most engineers stop — PMKSA caching, SAE internals, MFP, OWE, and the MAC randomization problem in enterprise.</p>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_80211_index.html">Hub</a>
+    <a href="study_phase2_mac.html">&larr; Phase 2</a>
+    <a href="#day1">Day 1</a><a href="#day2">Day 2</a><a href="#day3">Day 3</a>
+    <a href="#day4">Day 4</a><a href="#day5">Day 5</a><a href="#day6">Day 6</a>
+    <a href="study_phase4_qos_roaming.html">Phase 4 &rarr;</a>
+  </nav>
+</header>
+<main>
+
+  <div style="background:#fff1f2;border:1px solid #fecdd3;padding:0.8rem 1rem;margin-bottom:1.5rem;font-family:'Libre Franklin',sans-serif;font-size:0.82rem;">
+    <strong>Assumed known:</strong> WPA2/WPA3 4-way handshake, PMK derivation (PBKDF2 / SAE commit/confirm basics), PEAP-MSCHAPv2 flow, GTK rotation mechanics. This phase starts at the next layer.
+  </div>
+
+  <span class="section-label" id="day1">Day 1</span>
+  <div class="day-card">
+    <div class="day-num">Day 1 of 6</div>
+    <h2>PMKSA Caching, OKC, FT (802.11r) — Keying Hierarchy</h2>
+    <span class="prereq">Prereq: 4-way handshake familiarity (assumed known)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">In FT-over-DS, the client sends an FT Action frame to AP1 (the current AP) addressed to AP2 (the target). AP1 relays it. What frame carries the PMK-R1 derivation request from AP2 to AP1 — and what key material does AP1 send back?</div>
+    <div class="socratic">OKC (Opportunistic Key Caching) caches the PMK at the controller, not per-AP. If you have 3 APs and a client roams A→B→C→A, how many full 802.1X authentications does the client perform — and what's the PMKID derivation formula that makes the cache lookup work?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Apple Wireless Documents — roaming PDF set</strong> (T2)<br><strong>80211-2024.pdf §13.4</strong> — FT key hierarchy (PMK-R0, PMK-R1, PTK derivation)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">FT Auth Frame Capture + Latency Delta</div>
+      Create two SSIDs on AP1: one with 802.11r enabled, one without &rarr; iPhone roam between radios &rarr; capture FT Auth → Reassoc sequence &rarr; measure deauth-to-first-data-frame delta for FT vs full 4-way &rarr; record latency savings in ms.
+    </div>
+  </div>
+
+  <span class="section-label" id="day2">Day 2</span>
+  <div class="day-card">
+    <div class="day-num">Day 2 of 6</div>
+    <h2>SAE — H2E (Hash-to-Element), PT Pre-Computation, Anti-Clogging</h2>
+    <span class="prereq">Prereq: SAE commit/confirm basics (assumed known)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Original SAE "Hunting-and-Pecking" (H2P) had a timing side-channel — the loop iteration count leaked information about the password. What does H2E (Hash-to-Element) specifically change to eliminate that side-channel?</div>
+    <div class="socratic">The PT (Password Token) pre-computation in H2E is done once at provisioning and stored. If an AP supports both H2P and H2E clients simultaneously, what IE field advertises capability — and can a client be silently downgraded to H2P by a rogue AP?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>80211-2024.pdf §12.4</strong> — SAE authentication, H2E, anti-clogging token<br><strong>802.11be-2024.pdf</strong> — security addendum (SAE-PT)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">SAE Commit/Confirm Frame Decode</div>
+      Configure AP1 with WPA3-Personal (SAE-only) SSID &rarr; AP1 capture during iPhone join &rarr; Wireshark filter <code>wlan.fc.type_subtype == 0x000b</code> (Authentication) &rarr; decode SAE Commit: Finite Cyclic Group, Anti-Clogging Token (if present), Scalar, Element fields.
+    </div>
+  </div>
+
+  <span class="section-label" id="day3">Day 3</span>
+  <div class="day-card">
+    <div class="day-num">Day 3 of 6</div>
+    <h2>MFP / 802.11w / BIP — Protected Management Frames in Practice</h2>
+    <span class="prereq">Prereq: Day 2 (SAE); prior rogue NAV PCAP from May 4 session</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">MFP "Required" mode rejects any client that doesn't support 802.11w. If a rogue AP sends a spoofed Deauth (unprotected) to disconnect a client, what does the client with MFP Required do — and what is the SA Query procedure that follows?</div>
+    <div class="socratic">BIP-CMAC (Broadcast Integrity Protocol) protects group-addressed management frames. Which specific frame types does it protect, and why can't it use per-unicast encryption keys?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Spectrum Interferers.pdf</strong> — rogue deauth context (correlate with May 4 NAV pcap)<br><strong>80211-2024.pdf §12.6</strong> — MFP, SA Query, BIP-CMAC</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">MFP SA Query Observation</div>
+      Enable MFP Required on AP1 SSID &rarr; connect iPhone &rarr; capture management frames &rarr; Wireshark filter <code>wlan.fc.type == 0</code> &rarr; look for SA Query Request / SA Query Response pair &rarr; verify IGTK (MME element) present in Deauth with MFP.
+    </div>
+  </div>
+
+  <span class="section-label" id="day4">Day 4</span>
+  <div class="day-card">
+    <div class="day-num">Day 4 of 6</div>
+    <h2>OWE + OWE Transition Mode</h2>
+    <span class="prereq">Prereq: Day 2–3 (SAE, MFP); DHCP open network context</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">OWE Transition Mode runs two BSSIDs on the same AP: one open (legacy), one OWE. When an iPhone sees both, what determines which BSSID it associates to — and what specific IE field in the open BSSID's beacon points at the OWE BSSID?</div>
+    <div class="socratic">OWE provides unauthenticated encryption. Why is it still meaningful for a coffee-shop captive portal — and what attack does it specifically prevent that WPA2-Open cannot?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Apple Wireless Documents — open Wi-Fi + privacy PDFs</strong> (T2)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">OWE-T Beacon IE Decode</div>
+      Enable OWE-Transition SSID in XIQ &rarr; AP1 capture beacons on both BSSIDs &rarr; decode <strong>OWE Transition Mode IE</strong> in the open BSSID beacon — verify it points to OWE BSSID MAC + SSID &rarr; iPhone should auto-prefer OWE BSSID.
+    </div>
+  </div>
+
+  <span class="section-label" id="day5">Day 5</span>
+  <div class="day-card">
+    <div class="day-num">Day 5 of 6</div>
+    <h2>802.1X EAP-TLS — Server Cert Chain, MAC Randomization vs RADIUS</h2>
+    <span class="prereq">Prereq: PEAP-MSCHAPv2 flow (assumed known); Phase 2 Day 6 (multicast/ARP)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">If a MacBook sends a per-SSID random MAC (iOS 14+/macOS 12+ default) and your RADIUS policy enforces MAC-based authorization, what breaks first — accounting continuity, or authorization — and which RADIUS attribute carries the offending value?</div>
+    <div class="socratic">EAP-TLS uses mutual certificate authentication. The client presents a cert, the server presents a cert. If the server cert chain is missing an intermediate CA, what happens in the EAP exchange — and where does it fail in the handshake?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Capture 08 — RADIUS over Wireless.pcapng</strong> (T3 tool)<br><strong>Apple Wireless Documents — privacy + MAC randomization</strong> (T2)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">RADIUS PCAP Frame Correlation</div>
+      Open <code>Capture 08 - RADIUS over Wireless.pcapng</code> in Wireshark &rarr; filter <code>radius</code> &rarr; trace: EAPOL Start → EAP Identity → EAP-TLS Client Hello → Server Hello + cert chain → EAP Success → RADIUS Access-Accept &rarr; note which RADIUS attribute carries the session key (MS-MPPE-Recv-Key, Attr 26/311/17).
+    </div>
+  </div>
+
+  <span class="section-label" id="day6">Day 6</span>
+  <div class="day-card">
+    <div class="day-num">Day 6 of 6</div>
+    <h2>Roaming Triggers — 11k Neighbor Report, BTM (11v), Apple Roaming Algorithm</h2>
+    <span class="prereq">Prereq: Day 1 (FT/OKC); Phase 2 Day 5 (power save, wake events)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Apple's roaming algorithm requires the candidate AP to have a better RSSI than the current AP by a defined hysteresis margin. If the controller sends a BTM Request with Disassociation Imminent = 1, what does the iPhone do — and under what condition does it ignore the request?</div>
+    <div class="socratic">11k Neighbor Report gives the client a list of candidate APs without scanning every channel. If the neighbor list is stale (AP decommissioned), what does the client do — and how does the AP know to refresh the list?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Apple Wireless Documents — Wi-Fi roaming behavior + 11k/v guide</strong> (T2)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">BTM Request/Response Capture</div>
+      Enable 802.11k + 802.11v on AP1 SSID in XIQ &rarr; iPhone connected &rarr; trigger BTM Request from XIQ (client steering) &rarr; AP1 capture &rarr; Wireshark filter <code>wlan.fixed.action_code == 7</code> (BTM Request) and <code>wlan.fixed.action_code == 8</code> (BTM Response) &rarr; decode status code + candidate list.
+    </div>
+
+    <div class="block-label">Phase 3 Checkpoint</div>
+    <div class="socratic">Without notes: draw the PMK-R0 → PMK-R1 → PTK derivation tree. Identify which AP holds PMK-R0 and which holds PMK-R1. Then explain what SAE H2E changes vs H2P and why it matters for IoT devices doing SAE frequently.</div>
+  </div>
+
+  <div style="margin-top:2rem;padding:1rem;background:#fff1f2;border:1px solid #fecdd3;font-family:'Libre Franklin',sans-serif;font-size:0.82rem;">
+    <strong style="color:#9d174d">Phase 3 Complete?</strong> &nbsp; Proceed to
+    <a href="study_phase4_qos_roaming.html" style="color:#9d174d;font-weight:700">Phase 4 — QoS, Roaming &amp; Convergence &rarr;</a>
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; Phase 3 — Security Beyond the Handshake</footer>
+</body>
+</html>

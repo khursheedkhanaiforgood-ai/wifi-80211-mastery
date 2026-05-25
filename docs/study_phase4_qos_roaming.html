@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 4 — QoS, Roaming &amp; Convergence | 802.11 Mastery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #581c87; padding: 1.5rem 2rem 1rem; max-width: 900px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #581c87; }
+    h1 { font-size: 1.9rem; font-weight: 700; margin: 0.3rem 0 0.4rem; }
+    .deck { font-size: 1rem; color: #444; font-style: italic; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; } nav a:hover { text-decoration: underline; }
+    main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #581c87; border-top: 3px solid #581c87; padding-top: 0.4rem; margin: 2.5rem 0 1rem; }
+    .day-card { border: 1px solid #e0e0e0; border-left: 4px solid #581c87; background: #fff; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; }
+    .day-card .day-num { font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #581c87; font-weight: 600; margin-bottom: 0.3rem; }
+    .day-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .prereq { display: inline-block; background: #f5f3ff; border: 1px solid #ddd6fe; color: #5b21b6; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.8rem; }
+    .block-label { font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #555; margin: 1rem 0 0.3rem; }
+    .socratic { background: #f5f3ff; border-left: 3px solid #581c87; padding: 0.8rem 1rem; margin: 0.5rem 0; font-style: italic; font-size: 0.92rem; color: #333; }
+    .lab-box { background: #f5f3ff; border: 1px solid #ddd6fe; padding: 0.8rem 1rem; margin: 0.5rem 0; font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; }
+    .lab-box .lab-title { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.08em; color: #581c87; margin-bottom: 0.4rem; }
+    code { font-family: 'SF Mono','Fira Mono',monospace; font-size: 0.82rem; background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 2px; }
+    .reading { font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; color: #555; }
+    .reading strong { color: #1a1a1a; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 900px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">Phase 4 &nbsp;&bull;&nbsp; QoS, Roaming &amp; Convergence &nbsp;&bull;&nbsp; 5 days &nbsp;&bull;&nbsp; ~8 hours</p>
+  <h1>QoS, Roaming &amp; Convergence</h1>
+  <p class="deck">DSCP trust boundaries, voice roaming budget, sticky clients, and why band steering breaks Apple devices.</p>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_80211_index.html">Hub</a>
+    <a href="study_phase3_security.html">&larr; Phase 3</a>
+    <a href="#day1">Day 1</a><a href="#day2">Day 2</a><a href="#day3">Day 3</a><a href="#day4">Day 4</a><a href="#day5">Day 5</a>
+    <a href="study_phase5_capacity.html">Phase 5 &rarr;</a>
+  </nav>
+</header>
+<main>
+
+  <span class="section-label" id="day1">Day 1</span>
+  <div class="day-card">
+    <div class="day-num">Day 1 of 5</div>
+    <h2>DSCP↔UP Mapping, WMM-UP↔AC, the DSCP=0 Collapse Problem</h2>
+    <span class="prereq">Prereq: Phase 2 Day 1 (EDCA/AC queues); May 8 QoS EOD findings</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">CDN traffic arrives at DSCP=0 (best-effort). Your modem strips DSCP marking. Inside your SSID, FaceTime voice still works. What is actually assigning the WMM AC — the AP, the OS, or the CDN — and how do you verify it with a single Wireshark filter?</div>
+    <div class="socratic">DSCP 46 (EF) should map to UP 6 (AC_VO). But the mapping table in 802.11e has exceptions. What DSCP value maps to AC_VI rather than AC_VO — and why does that asymmetry exist?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>WLANPros v5 — Apple Best Practices sheet</strong> (DSCP mapping table)<br>Prior May 8 QoS EOD — DSCP=0 end-to-end finding</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">DSCP End-to-End Capture</div>
+      MacBook iPerf3 UDP with DSCP 46 (<code>-S 46</code>) toward wired server &rarr; AP1 air capture &rarr; Wireshark filter <code>ip.dsfield.dscp == 46</code> &rarr; decode QoS Control field in the 802.11 header &rarr; record UP value &rarr; compare to SW1 <code>show qosprofile</code> to verify wired egress marking.
+    </div>
+  </div>
+
+  <span class="section-label" id="day2">Day 2</span>
+  <div class="day-card">
+    <div class="day-num">Day 2 of 5</div>
+    <h2>Uplink QoS Trust on AP3000, Downlink AC Selection Logic</h2>
+    <span class="prereq">Prereq: Day 1 (DSCP/UP mapping)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">AP3000 by default trusts the client's UP marking in uplink frames. What stops a malicious client from marking all its traffic as AC_VO — and where is the trust boundary enforcement point in IQ Engine OS?</div>
+    <div class="socratic">On downlink, the AP maps DSCP from the wired frame to WMM UP before transmission. If the wired frame arrives DSCP=0 but carries RTP voice, what happens — and which AP3000 feature can reclassify it?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>reference_ap3000_command_themes.md</strong> — QoS lens commands<br>Prior May 8 PM QoS EOD</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">AP3000 QoS Show Commands</div>
+      SSH to AP1 &rarr; <code>show wifi qos</code> &rarr; <code>show wifi qos-map</code> &rarr; verify DSCP→UP mapping table &rarr; cross-reference with SW1 <code>show qosprofile</code> and <code>show policy</code> &rarr; document the full DSCP trust chain from client air → AP wired egress → SW1 port queue.
+    </div>
+  </div>
+
+  <span class="section-label" id="day3">Day 3</span>
+  <div class="day-card">
+    <div class="day-num">Day 3 of 5</div>
+    <h2>Voice Roaming Budget — 50 ms Target, 11r vs OKC Cost</h2>
+    <span class="prereq">Prereq: Phase 3 Day 1 (FT/OKC keying hierarchy)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">The G.114 voice quality threshold requires end-to-end latency under 150 ms; the roaming contribution budget is often set at 50 ms. A full 802.11i 4-way handshake takes ~80–120 ms in a loaded cell. What specific steps does 11r eliminate — and what's the residual cost?</div>
+    <div class="socratic">OKC avoids the full 802.1X re-authentication but still requires a 4-way handshake. Why does OKC still take ~40–60 ms while FT is ~15–20 ms — what's the extra round-trip in OKC that FT avoids?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Aruba VHD Planning + Theory</strong> (T2) — roaming latency analysis</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">Roaming Latency Measurement</div>
+      iPhone connected to AP1 FT-enabled SSID &rarr; trigger roam (vary TX power via XIQ) &rarr; AP1 capture &rarr; measure: deauth/disassoc timestamp → FT Auth Request → FT Auth Response → Reassoc Request → Reassoc Response → first data frame &rarr; record delta in ms vs non-FT SSID.
+    </div>
+  </div>
+
+  <span class="section-label" id="day4">Day 4</span>
+  <div class="day-card">
+    <div class="day-num">Day 4 of 5</div>
+    <h2>Sticky Clients &amp; RSSI Hysteresis — Controller vs Client Decision</h2>
+    <span class="prereq">Prereq: Phase 3 Day 6 (BTM/11v); Day 3 (roaming budget)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Forcing roaming via deauth at an RSSI threshold is a common controller feature. For Apple devices, what specifically breaks — and what does Apple require the controller to send before an iPhone will voluntarily roam?</div>
+    <div class="socratic">RSSI hysteresis means the client won't roam until the target AP is X dB better than the current AP. Apple sets this hysteresis internally. What happens if the target AP is exactly at the hysteresis threshold when the client is moving toward it?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Apple Wireless Documents — roaming + enterprise best practices</strong> (T2)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">RSSI-Based Steering Test</div>
+      Enable RSSI-based client steering on AP1 in XIQ (if available) &rarr; connect iPhone at low RSSI &rarr; observe: does AP send BTM Request first? Does iPhone respond with Status 0 (accept) or 6 (reject)? &rarr; capture BTM Request → BTM Response &rarr; document iPhone behavior at different RSSI deltas.
+    </div>
+  </div>
+
+  <span class="section-label" id="day5">Day 5</span>
+  <div class="day-card">
+    <div class="day-num">Day 5 of 5</div>
+    <h2>Load Balancing — Band Steering, Client Distribution, 11v MBO</h2>
+    <span class="prereq">Prereq: Day 4 (sticky clients, BTM); Phase 3 Day 6 (11k/v)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Classic band steering suppresses probe responses on 2.4 GHz to force clients to 5 GHz. Why does this break iPhone scanning — and what's the modern 11v MBO (Multi-Band Operation) alternative that doesn't require probe suppression?</div>
+    <div class="socratic">Client distribution (load balancing across APs) uses BTM requests to move overloaded clients. If the target AP is also at 80% airtime utilization, what should the controller check before issuing the BTM — and what MBO IE encodes this constraint?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Apple Wireless Documents — Apple Best Practices for Enterprise</strong> (T2)<br><strong>80211-2024.pdf</strong> — MBO element, BTM with candidate list</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">MBO Assoc Deny Decode</div>
+      Enable 802.11v MBO band steering in XIQ &rarr; iPhone probe on 2.4 GHz &rarr; capture on 2.4 GHz &rarr; look for Association Response with Status Code 30 (Assoc Denied — Band Steering) and MBO element &rarr; decode MBO Assoc Disallowed attribute (reason code).
+    </div>
+
+    <div class="block-label">Phase 4 Checkpoint</div>
+    <div class="socratic">Without notes: compute the air-time penalty of a single non-11r roam at MCS 4 on a 40 MHz channel for a 60 ms voice frame budget. Then explain why probe suppression band steering is deprecated in modern enterprise deployments.</div>
+  </div>
+
+  <div style="margin-top:2rem;padding:1rem;background:#f5f3ff;border:1px solid #ddd6fe;font-family:'Libre Franklin',sans-serif;font-size:0.82rem;">
+    <strong style="color:#581c87">Phase 4 Complete?</strong> &nbsp; Proceed to
+    <a href="study_phase5_capacity.html" style="color:#581c87;font-weight:700">Phase 5 — Capacity Planning &amp; High-Density Design &rarr;</a>
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; Phase 4 — QoS, Roaming &amp; Convergence</footer>
+</body>
+</html>

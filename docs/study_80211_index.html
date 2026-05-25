@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>802.11 Mastery — Curriculum Hub</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #1a1a1a; padding: 1.5rem 2rem 1rem; max-width: 900px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #666; }
+    h1 { font-size: 1.8rem; font-weight: 700; margin: 0.3rem 0 0.5rem; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #666; border-top: 2px solid #1a1a1a; padding-top: 0.4rem; margin: 2rem 0 1rem; }
+    .phase-row { border: 1px solid #e0e0e0; border-left: 4px solid #ccc; padding: 1rem 1.2rem; margin-bottom: 0.8rem; background: #fff; }
+    .phase-row h2 { font-size: 1rem; font-weight: 700; }
+    .phase-row .meta { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; color: #666; margin-bottom: 0.3rem; }
+    .phase-row p { font-size: 0.85rem; color: #444; margin-top: 0.3rem; }
+    .phase-row a { font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+    .day-list { margin-top: 0.5rem; padding-left: 1.2rem; }
+    .day-list li { font-size: 0.82rem; color: #555; margin-bottom: 0.2rem; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 900px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">KhKLab &nbsp;&bull;&nbsp; 802.11 Curriculum Hub &nbsp;&bull;&nbsp; May 2026</p>
+  <h1>Curriculum Hub</h1>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_phase1_phy.html">Phase 1</a>
+    <a href="study_phase2_mac.html">Phase 2</a>
+    <a href="study_phase3_security.html">Phase 3</a>
+    <a href="study_phase4_qos_roaming.html">Phase 4</a>
+    <a href="study_phase5_capacity.html">Phase 5</a>
+    <a href="study_phase6_capstone.html">Phase 6</a>
+  </nav>
+</header>
+<main>
+
+  <span class="section-label">All Phases</span>
+
+  <div class="phase-row" style="border-left-color:#134e4a">
+    <div class="meta" style="color:#134e4a">Phase 1 &nbsp;&bull;&nbsp; 8 days &nbsp;&bull;&nbsp; ~12 hours</div>
+    <h2>PHY &amp; RF Internals</h2>
+    <p>OFDM symbol structure &rarr; MCS internals &rarr; channel widths &rarr; DFS &rarr; 6 GHz PSC &rarr; MU-MIMO vs OFDMA &rarr; spatial streams / TxBF &rarr; Wi-Fi 7 MLO</p>
+    <ul class="day-list">
+      <li>Day 1 — OFDM subcarrier spacing &amp; symbol time across 11a/n/ac/ax/be</li>
+      <li>Day 2 — MCS index mechanics, SNR floor, cell-edge collapse</li>
+      <li>Day 3 — Channel widths 20/40/80/160/320 MHz, primary/secondary signalling</li>
+      <li>Day 4 — 5 GHz DFS &amp; FCC channels, radar detection cascade</li>
+      <li>Day 5 — 6 GHz PSC, AFC, OOB discovery (FILS, RNR, UPR)</li>
+      <li>Day 6 — MU-MIMO vs OFDMA — when each wins</li>
+      <li>Day 7 — Spatial streams, TxBF sounding (NDP/NDPA)</li>
+      <li>Day 8 — Wi-Fi 7 PHY: 320 MHz, 4K-QAM, MLO link types, multi-RU</li>
+    </ul>
+    <a href="study_phase1_phy.html" style="color:#134e4a">Open Phase 1 &rarr;</a>
+  </div>
+
+  <div class="phase-row" style="border-left-color:#7c2d12">
+    <div class="meta" style="color:#7c2d12">Phase 2 &nbsp;&bull;&nbsp; 6 days &nbsp;&bull;&nbsp; ~9 hours</div>
+    <h2>MAC &amp; Frame Exchange</h2>
+    <p>DCF/EDCA &rarr; NAV/RTS-CTS &rarr; A-MPDU/A-MSDU &rarr; TWT &rarr; power save &rarr; multicast cost</p>
+    <ul class="day-list">
+      <li>Day 1 — DCF, EDCA AC queues, CWmin/CWmax/AIFSN per AC</li>
+      <li>Day 2 — NAV, RTS/CTS, MU-RTS, BSS Color spatial reuse</li>
+      <li>Day 3 — Aggregation: A-MPDU vs A-MSDU, BlockAck windows</li>
+      <li>Day 4 — TWT: individual, broadcast, restricted</li>
+      <li>Day 5 — Power save: PS-Poll, U-APSD, OMI, TIM/DTIM</li>
+      <li>Day 6 — Multicast/broadcast over Wi-Fi, IGMP snooping boundary</li>
+    </ul>
+    <a href="study_phase2_mac.html" style="color:#7c2d12">Open Phase 2 &rarr;</a>
+  </div>
+
+  <div class="phase-row" style="border-left-color:#9d174d">
+    <div class="meta" style="color:#9d174d">Phase 3 &nbsp;&bull;&nbsp; 6 days &nbsp;&bull;&nbsp; ~10 hours</div>
+    <h2>Security Beyond the Handshake</h2>
+    <p>PMKSA/OKC/FT &rarr; SAE H2E &rarr; MFP/BIP &rarr; OWE-T &rarr; EAP-TLS + MAC randomization &rarr; roaming triggers</p>
+    <ul class="day-list">
+      <li>Day 1 — PMKSA caching, OKC, FT (802.11r) keying hierarchy</li>
+      <li>Day 2 — SAE: H2E (Hash-to-Element), PT, anti-clogging, downgrade</li>
+      <li>Day 3 — MFP / 802.11w / BIP — protected management frames</li>
+      <li>Day 4 — OWE + OWE Transition Mode</li>
+      <li>Day 5 — 802.1X-EAP-TLS, server cert chain, MAC randomization vs RADIUS</li>
+      <li>Day 6 — Roaming triggers: beacon report, 11k neighbor report, BTM (11v), Apple algo</li>
+    </ul>
+    <a href="study_phase3_security.html" style="color:#9d174d">Open Phase 3 &rarr;</a>
+  </div>
+
+  <div class="phase-row" style="border-left-color:#581c87">
+    <div class="meta" style="color:#581c87">Phase 4 &nbsp;&bull;&nbsp; 5 days &nbsp;&bull;&nbsp; ~8 hours</div>
+    <h2>QoS, Roaming &amp; Convergence</h2>
+    <p>DSCP↔UP &rarr; uplink trust &rarr; voice roaming budget &rarr; sticky clients &rarr; band steering / MBO</p>
+    <ul class="day-list">
+      <li>Day 1 — DSCP↔UP mapping, WMM-UP↔AC, the DSCP=0 collapse problem</li>
+      <li>Day 2 — Uplink QoS trust on AP3000, downlink AC selection</li>
+      <li>Day 3 — Voice roaming budget: 50 ms target, 11r vs OKC cost</li>
+      <li>Day 4 — Sticky clients &amp; RSSI hysteresis, controller vs client decision</li>
+      <li>Day 5 — Load balancing: band steering, client distribution, 11v MBO</li>
+    </ul>
+    <a href="study_phase4_qos_roaming.html" style="color:#581c87">Open Phase 4 &rarr;</a>
+  </div>
+
+  <div class="phase-row" style="border-left-color:#1d4ed8">
+    <div class="meta" style="color:#1d4ed8">Phase 5 &nbsp;&bull;&nbsp; 5 days &nbsp;&bull;&nbsp; ~9 hours</div>
+    <h2>Capacity Planning &amp; High-Density Design</h2>
+    <p>Airtime math &rarr; RF coverage tiers &rarr; SSID overhead &rarr; co-channel vs adjacent &rarr; Wi-Fi 7 ceiling</p>
+    <ul class="day-list">
+      <li>Day 1 — Airtime math: time-on-air per MCS × frame size + overheads</li>
+      <li>Day 2 — RF coverage tiers (−67/−72/−75 dBm), RSSI asymmetry</li>
+      <li>Day 3 — SSID overhead: beacon airtime cost per SSID per band</li>
+      <li>Day 4 — Co-channel contention vs adjacent-channel interference</li>
+      <li>Day 5 — Wi-Fi 7 capacity model: MLO + multi-RU + 320 MHz ceiling</li>
+    </ul>
+    <a href="study_phase5_capacity.html" style="color:#1d4ed8">Open Phase 5 &rarr;</a>
+  </div>
+
+  <div class="phase-row" style="border-left-color:#065f46">
+    <div class="meta" style="color:#065f46">Phase 6 &nbsp;&bull;&nbsp; 4 days &nbsp;&bull;&nbsp; ~7 hours &nbsp;&bull;&nbsp; Terminal phase</div>
+    <h2>Field Troubleshooting Capstone</h2>
+    <p>WLPC 2026 framework &rarr; 30-row causes table &rarr; frame stats &rarr; client-ready incident report</p>
+    <ul class="day-list">
+      <li>Day 1 — WLPC 2026 6-process framework (MANAGE/INVESTIGATE/MEASURE/VALIDATE/ANALYZE/INTERROGATE)</li>
+      <li>Day 2 — 30-row causes table: WIRELESS / LOCAL NET / INTERNET</li>
+      <li>Day 3 — Frame stats interpretation: retries, BAR, retry % thresholds</li>
+      <li>Day 4 — Capstone incident report (based on May 7 DHCP incident)</li>
+    </ul>
+    <a href="study_phase6_capstone.html" style="color:#065f46">Open Phase 6 &rarr;</a>
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; 802.11 Mastery Curriculum</footer>
+</body>
+</html>

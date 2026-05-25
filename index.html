@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>802.11 Mastery — Socratic Deep-Dive Curriculum</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #1a1a1a; padding: 2rem 2rem 1rem; max-width: 1200px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase; color: #666; margin-bottom: 0.5rem; }
+    h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 700; line-height: 1.2; margin-bottom: 0.5rem; }
+    .deck { font-size: 1.1rem; color: #444; font-style: italic; margin-bottom: 1rem; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 1rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.5rem; flex-wrap: wrap; padding: 0.5rem 0; }
+    nav a { color: #1a1a1a; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    main { max-width: 1200px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: #666; border-top: 3px solid #1a1a1a; padding-top: 0.4rem; margin: 2.5rem 0 1.2rem; }
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; margin-bottom: 2rem; }
+    .card { display: block; border: 1px solid #e0e0e0; border-top: 4px solid #ccc; padding: 1.2rem; text-decoration: none; color: #1a1a1a; background: #fff; transition: box-shadow .15s; }
+    .card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.1); }
+    .card-tag { font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-bottom: 0.5rem; }
+    .card h2 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; line-height: 1.3; }
+    .card p { font-size: 0.82rem; color: #555; margin-bottom: 0.6rem; }
+    .card .cta { font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #1a1a1a; }
+    .intro-block { max-width: 700px; margin-bottom: 2rem; }
+    .intro-block p { font-size: 1.05rem; margin-bottom: 0.8rem; }
+    .progress-table { width: 100%; border-collapse: collapse; font-family: 'Libre Franklin', sans-serif; font-size: 0.85rem; margin-bottom: 2rem; }
+    .progress-table th { text-align: left; border-bottom: 2px solid #1a1a1a; padding: 0.4rem 0.8rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+    .progress-table td { padding: 0.5rem 0.8rem; border-bottom: 1px solid #e8e8e8; }
+    .progress-table tr:hover td { background: #f5f5f3; }
+    .badge { display: inline-block; padding: 0.15rem 0.5rem; border-radius: 2px; font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; }
+    .badge-pending { background: #f3f4f6; color: #6b7280; }
+    .badge-active { background: #fef3c7; color: #92400e; }
+    .badge-done { background: #d1fae5; color: #065f46; }
+    footer { border-top: 1px solid #ccc; padding: 1.5rem 2rem; max-width: 1200px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; color: #888; }
+  </style>
+</head>
+<body>
+
+<header>
+  <p class="byline">KhKLab &nbsp;&bull;&nbsp; 802.11 Deep-Dive Curriculum &nbsp;&bull;&nbsp; Started May 2026</p>
+  <h1>802.11 Mastery</h1>
+  <p class="deck">A six-phase Socratic curriculum — from OFDM internals to field-ready capacity design — with live lab exercises on AP3000 + 5320 EXOS.</p>
+  <hr class="rule">
+  <nav>
+    <a href="#phases">Phases</a>
+    <a href="#schedule">Schedule</a>
+    <a href="docs/study_80211_index.html">Hub</a>
+    <a href="docs/study_phase1_phy.html">Phase 1 — PHY</a>
+    <a href="docs/study_phase2_mac.html">Phase 2 — MAC</a>
+    <a href="docs/study_phase3_security.html">Phase 3 — Security</a>
+    <a href="docs/study_phase4_qos_roaming.html">Phase 4 — QoS</a>
+    <a href="docs/study_phase5_capacity.html">Phase 5 — Capacity</a>
+    <a href="docs/study_phase6_capstone.html">Phase 6 — Capstone</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="intro-block">
+    <p>This curriculum assumes you already own WPA2/WPA3 4-way handshake forensics, PEAP-MSCHAPv2 architecture, and DHCP cascade debugging. Each phase opens one layer deeper — starting at OFDM symbol structure, not "what is Wi-Fi."</p>
+    <p>Every day = 1–2 hour session. Every session = Socratic questions → WLPC corpus reading → AP3000 lab capture → HTML knowledge note. Pick up any day; each section is self-contained with prereq tags.</p>
+  </div>
+
+  <span class="section-label" id="phases">The Six Phases</span>
+
+  <div class="card-grid">
+    <a class="card" href="docs/study_phase1_phy.html" style="border-top-color:#134e4a">
+      <div class="card-tag" style="color:#134e4a">Phase 1 &mdash; 8 days</div>
+      <h2>PHY &amp; RF Internals</h2>
+      <p>OFDM symbol structure, MCS internals, channel widths, DFS, 6 GHz PSC, MU-MIMO vs OFDMA, spatial streams, Wi-Fi 7 MLO.</p>
+      <span class="cta">Start here &rarr;</span>
+    </a>
+    <a class="card" href="docs/study_phase2_mac.html" style="border-top-color:#7c2d12">
+      <div class="card-tag" style="color:#7c2d12">Phase 2 &mdash; 6 days</div>
+      <h2>MAC &amp; Frame Exchange</h2>
+      <p>DCF/EDCA, NAV/RTS-CTS, A-MPDU, TWT, power save, TIM/DTIM, multicast/broadcast cost.</p>
+      <span class="cta">Open &rarr;</span>
+    </a>
+    <a class="card" href="docs/study_phase3_security.html" style="border-top-color:#9d174d">
+      <div class="card-tag" style="color:#9d174d">Phase 3 &mdash; 6 days</div>
+      <h2>Security Beyond the Handshake</h2>
+      <p>PMKSA/OKC/FT, SAE H2E, MFP/BIP, OWE-T, EAP-TLS MAC randomization, roaming triggers 11k/v/r.</p>
+      <span class="cta">Open &rarr;</span>
+    </a>
+    <a class="card" href="docs/study_phase4_qos_roaming.html" style="border-top-color:#581c87">
+      <div class="card-tag" style="color:#581c87">Phase 4 &mdash; 5 days</div>
+      <h2>QoS, Roaming &amp; Convergence</h2>
+      <p>DSCP↔UP mapping, uplink trust, voice roaming budget, sticky clients, band steering, MBO.</p>
+      <span class="cta">Open &rarr;</span>
+    </a>
+    <a class="card" href="docs/study_phase5_capacity.html" style="border-top-color:#1d4ed8">
+      <div class="card-tag" style="color:#1d4ed8">Phase 5 &mdash; 5 days</div>
+      <h2>Capacity Planning &amp; HDD</h2>
+      <p>Airtime math, RF coverage tiers, SSID overhead, co-channel vs adjacent-channel, Wi-Fi 7 capacity model.</p>
+      <span class="cta">Open &rarr;</span>
+    </a>
+    <a class="card" href="docs/study_phase6_capstone.html" style="border-top-color:#065f46">
+      <div class="card-tag" style="color:#065f46">Phase 6 &mdash; 4 days</div>
+      <h2>Field Troubleshooting Capstone</h2>
+      <p>WLPC 2026 6-process framework, 30-row causes table, frame stats, capstone incident report.</p>
+      <span class="cta">Open &rarr;</span>
+    </a>
+  </div>
+
+  <span class="section-label" id="schedule">Curriculum Schedule</span>
+
+  <table class="progress-table">
+    <thead>
+      <tr>
+        <th>Phase</th>
+        <th>Days</th>
+        <th>Hours</th>
+        <th>Key Lab</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><a href="docs/study_phase1_phy.html">Phase 1 — PHY &amp; RF</a></td>
+        <td>8</td>
+        <td>~12 h</td>
+        <td>AP1 beacon capture, MCS shift at range, EHT IE decode</td>
+        <td><span class="badge badge-active">Active</span></td>
+      </tr>
+      <tr>
+        <td><a href="docs/study_phase2_mac.html">Phase 2 — MAC</a></td>
+        <td>6</td>
+        <td>~9 h</td>
+        <td>EDCA AC capture, BlockAck, TWT negotiation, multicast path</td>
+        <td><span class="badge badge-pending">Pending</span></td>
+      </tr>
+      <tr>
+        <td><a href="docs/study_phase3_security.html">Phase 3 — Security</a></td>
+        <td>6</td>
+        <td>~10 h</td>
+        <td>FT Auth capture, SAE Commit/Confirm, OWE-T beacons, BTM</td>
+        <td><span class="badge badge-pending">Pending</span></td>
+      </tr>
+      <tr>
+        <td><a href="docs/study_phase4_qos_roaming.html">Phase 4 — QoS &amp; Roaming</a></td>
+        <td>5</td>
+        <td>~8 h</td>
+        <td>DSCP end-to-end capture, iPerf3, deauth-to-data delta</td>
+        <td><span class="badge badge-pending">Pending</span></td>
+      </tr>
+      <tr>
+        <td><a href="docs/study_phase5_capacity.html">Phase 5 — Capacity</a></td>
+        <td>5</td>
+        <td>~9 h</td>
+        <td>Revolution Wi-Fi Planner, beacon airtime, RSSI walktest</td>
+        <td><span class="badge badge-pending">Pending</span></td>
+      </tr>
+      <tr>
+        <td><a href="docs/study_phase6_capstone.html">Phase 6 — Capstone</a></td>
+        <td>4</td>
+        <td>~7 h</td>
+        <td>WLPC 2026 framework end-to-end, incident report</td>
+        <td><span class="badge badge-pending">Pending</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-family:'Libre Franklin',sans-serif;font-size:0.82rem;color:#666;margin-top:-1rem;">
+    Total: 34 study days &nbsp;&bull;&nbsp; ~55–60 hours &nbsp;&bull;&nbsp; Lab gear: AP3000 + 5320 EXOS + MacBook Wireshark (zero additional hardware)
+  </p>
+
+</main>
+
+<footer>
+  &copy; 2026 KhKLab &nbsp;&bull;&nbsp; 802.11 Mastery Curriculum &nbsp;&bull;&nbsp; Private study reference — WLPC corpus citations only, no corpus content reproduced.
+</footer>
+
+</body>
+</html>

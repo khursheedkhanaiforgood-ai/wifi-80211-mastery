@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 2 — MAC &amp; Frame Exchange | 802.11 Mastery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #7c2d12; padding: 1.5rem 2rem 1rem; max-width: 900px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7c2d12; }
+    h1 { font-size: 1.9rem; font-weight: 700; margin: 0.3rem 0 0.4rem; }
+    .deck { font-size: 1rem; color: #444; font-style: italic; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; } nav a:hover { text-decoration: underline; }
+    main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #7c2d12; border-top: 3px solid #7c2d12; padding-top: 0.4rem; margin: 2.5rem 0 1rem; }
+    .day-card { border: 1px solid #e0e0e0; border-left: 4px solid #7c2d12; background: #fff; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; }
+    .day-card .day-num { font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #7c2d12; font-weight: 600; margin-bottom: 0.3rem; }
+    .day-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .prereq { display: inline-block; background: #fff7ed; border: 1px solid #fed7aa; color: #9a3412; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.8rem; }
+    .block-label { font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #555; margin: 1rem 0 0.3rem; }
+    .socratic { background: #fff7ed; border-left: 3px solid #7c2d12; padding: 0.8rem 1rem; margin: 0.5rem 0; font-style: italic; font-size: 0.92rem; color: #333; }
+    .lab-box { background: #fff7ed; border: 1px solid #fed7aa; padding: 0.8rem 1rem; margin: 0.5rem 0; font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; }
+    .lab-box .lab-title { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.08em; color: #7c2d12; margin-bottom: 0.4rem; }
+    code { font-family: 'SF Mono', 'Fira Mono', monospace; font-size: 0.82rem; background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 2px; }
+    .reading { font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; color: #555; }
+    .reading strong { color: #1a1a1a; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 900px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">Phase 2 &nbsp;&bull;&nbsp; MAC &amp; Frame Exchange &nbsp;&bull;&nbsp; 6 days &nbsp;&bull;&nbsp; ~9 hours</p>
+  <h1>MAC &amp; Frame Exchange</h1>
+  <p class="deck">From EDCA arbitration to multicast cost — the mechanics that determine who talks and when.</p>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_80211_index.html">Hub</a>
+    <a href="study_phase1_phy.html">&larr; Phase 1</a>
+    <a href="#day1">Day 1</a><a href="#day2">Day 2</a><a href="#day3">Day 3</a>
+    <a href="#day4">Day 4</a><a href="#day5">Day 5</a><a href="#day6">Day 6</a>
+    <a href="study_phase3_security.html">Phase 3 &rarr;</a>
+  </nav>
+</header>
+<main>
+
+  <span class="section-label" id="day1">Day 1</span>
+  <div class="day-card">
+    <div class="day-num">Day 1 of 6</div>
+    <h2>DCF, EDCA AC Queues, CWmin/CWmax/AIFSN per AC</h2>
+    <span class="prereq">Prereq: Phase 1 Day 1–2 (OFDM, channel contention basics)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Voice AC (AC_VO) and Video AC (AC_VI) both expire their backoff timers at the same slot. Why does AC_VO win — and what parameter specifically determines the tie-break?</div>
+    <div class="socratic">CWmin for AC_VO is 3 slots vs 15 slots for AC_BE. If 10 clients all transmit simultaneously, why does the collision probability for voice still increase — and what protects it?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>CWNP - 802-11_arbitration.pdf</strong><br><strong>80211-2024.pdf §10</strong> — EDCA parameter sets, TXOP limits</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">EDCA TXOP Burst Capture</div>
+      Generate voice traffic (FaceTime or iPerf3 UDP small packets) from iPhone &rarr; AP1 capture &rarr; Wireshark filter <code>wlan.qos.tid == 6</code> (AC_VO) &rarr; measure TXOP burst duration &rarr; compare AC_VO TXOP vs AC_BE TXOP from the same capture.
+    </div>
+  </div>
+
+  <span class="section-label" id="day2">Day 2</span>
+  <div class="day-card">
+    <div class="day-num">Day 2 of 6</div>
+    <h2>NAV, RTS/CTS Protection, MU-RTS, BSS Color Spatial Reuse</h2>
+    <span class="prereq">Prereq: Day 1 (EDCA, slot timing)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Two BSSes have different BSS Colors. Client A in BSS-1 hears a frame from BSS-2 at −74 dBm; OBSS_PD threshold is −72 dBm. Does Client A defer or transmit — and which specific field in the HE PPDU header makes that decision?</div>
+    <div class="socratic">RTS/CTS protection was designed for hidden-node. MU-RTS is its 802.11ax successor. What does MU-RTS add that classic RTS can't do in a multi-client DL MU scenario?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>80211be-2024.pdf</strong> — BSS Color, OBSS_PD, spatial reuse parameter set</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">BSS Color Beacon Verification</div>
+      Capture beacons on AP1 &rarr; decode <strong>HE Operation IE</strong> &rarr; record BSS Color value &rarr; change BSS Color in XIQ &rarr; capture again &rarr; verify IE updates &rarr; if a neighbor BSS is visible, compare colors.
+    </div>
+  </div>
+
+  <span class="section-label" id="day3">Day 3</span>
+  <div class="day-card">
+    <div class="day-num">Day 3 of 6</div>
+    <h2>Aggregation — A-MPDU vs A-MSDU, BlockAck Windows</h2>
+    <span class="prereq">Prereq: Day 1–2</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">A-MSDU aggregates before encryption; A-MPDU aggregates after. Why does this order matter for retransmission granularity — and which one do you want in a lossy RF environment?</div>
+    <div class="socratic">The BlockAck window size is 64 frames in 11n and 256 in 11ax. If one frame is lost in a 256-frame window, what's the minimum retransmission overhead — and why doesn't the sender retransmit all 256?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Aruba VHD Config PDF</strong> (T2) — aggregation policy<br><strong>80211-2024.pdf §10.3</strong> — A-MPDU, A-MSDU, BA</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">BlockAck Frame Decode</div>
+      AP1 capture during iPerf3 bulk transfer &rarr; Wireshark filter <code>wlan.fc.type_subtype == 0x0019</code> (Block Ack) &rarr; expand BA bitmap &rarr; count subframe count in preceding A-MPDU &rarr; verify bitmap length matches window size.
+    </div>
+  </div>
+
+  <span class="section-label" id="day4">Day 4</span>
+  <div class="day-card">
+    <div class="day-num">Day 4 of 6</div>
+    <h2>TWT — Individual, Broadcast, Restricted</h2>
+    <span class="prereq">Prereq: Day 1 (EDCA, TXOP concepts)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">A printer negotiates individual TWT with a 60-second sleep interval and 100 ms service period. What's the worst-case latency for a print job that arrives 1 ms after the service period closes — and how does the AP handle queued frames during the sleep?</div>
+    <div class="socratic">Broadcast TWT lets the AP schedule all clients simultaneously. What's the downside for dense deployments where clients have heterogeneous traffic patterns?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>WiFi-6-For-Dummies — Extreme Networks</strong><br><strong>Apple Wireless Documents — iOS TWT behavior</strong> (T2)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">TWT Element Negotiation Capture</div>
+      iPhone (iOS 16+) connected to AP1 in 11ax mode &rarr; AP1 capture &rarr; Wireshark display filter <code>wlan.ext_tag.number == 216</code> (TWT element) &rarr; decode TWT Request, Setup Command, Wake Duration, Wake Interval.
+    </div>
+  </div>
+
+  <span class="section-label" id="day5">Day 5</span>
+  <div class="day-card">
+    <div class="day-num">Day 5 of 6</div>
+    <h2>Power Save — PS-Poll, U-APSD, OMI, TIM/DTIM</h2>
+    <span class="prereq">Prereq: Day 4 (TWT sleep/wake basics)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">A Ring camera is connected at DTIM 3. The AP beacon interval is 100 TU. The camera should wake every 300 TU to check for buffered frames. But you observe 200 ms wake spikes in the capture. What's the most likely cause at the TIM bitmap level?</div>
+    <div class="socratic">U-APSD (WMM Power Save) allows the client to trigger delivery of queued frames via a QoS Null frame. Why is this more efficient than PS-Poll for voice traffic — and what's the trigger frame mechanism?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Apple Wireless Documents — iOS Power Save behavior</strong><br><strong>WLAN Pi Documents — power save lab guide</strong> (T3)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">TIM Bitmap Decode</div>
+      AP1 beacon capture &rarr; Wireshark &rarr; decode <strong>TIM IE</strong> in a beacon when iPhone is sleeping &rarr; record: DTIM Count, DTIM Period, Bitmap Control, Partial Virtual Bitmap &rarr; cross-reference with <code>show wifi station &lt;mac&gt;</code> power-save state on AP1.
+    </div>
+  </div>
+
+  <span class="section-label" id="day6">Day 6</span>
+  <div class="day-card">
+    <div class="day-num">Day 6 of 6</div>
+    <h2>Multicast/Broadcast over Wi-Fi — DTIM Cost, ARP/ND, IGMP Snooping Boundary</h2>
+    <span class="prereq">Prereq: Day 5 (DTIM, buffered frames)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">IGMP snooping on SW1 limits which switch ports receive multicast streams. Why does enabling it not reduce Wi-Fi airtime by default — and where exactly does the multicast-to-unicast conversion have to happen?</div>
+    <div class="socratic">Every ARP broadcast is sent at the lowest mandatory rate (typically 6 Mbps). If you have 50 clients and 5 ARP broadcasts per second per client, what's the airtime cost — and what modern protocol eliminates this?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>IPv4_Multicast.pdf</strong> (T1 corpus)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">mDNS Multicast Path Trace</div>
+      iPhone generates mDNS (Bonjour) from iPhone &rarr; AP1 capture &rarr; Wireshark filter <code>dns.flags.opcode == 5</code> (mDNS) &rarr; check if AP unicast-converts to MacBook &rarr; check SW1 <code>show igmp snooping</code> &rarr; compare wired vs wireless multicast delivery path.
+    </div>
+
+    <div class="block-label">Phase 2 Checkpoint</div>
+    <div class="socratic">Without notes: hand-trace a 4-frame exchange (RTS → CTS → DATA(A-MPDU) → BA) from a PCAP and explain every Duration/ID field value. Then explain why DTIM 1 increases battery drain on mobile clients.</div>
+  </div>
+
+  <div style="margin-top:2rem;padding:1rem;background:#fff7ed;border:1px solid #fed7aa;font-family:'Libre Franklin',sans-serif;font-size:0.82rem;">
+    <strong style="color:#7c2d12">Phase 2 Complete?</strong> &nbsp; Proceed to
+    <a href="study_phase3_security.html" style="color:#7c2d12;font-weight:700">Phase 3 — Security Beyond the Handshake &rarr;</a>
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; Phase 2 — MAC &amp; Frame Exchange</footer>
+</body>
+</html>

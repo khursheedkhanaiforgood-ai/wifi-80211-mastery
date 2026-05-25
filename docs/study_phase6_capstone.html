@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 6 — Field Troubleshooting Capstone | 802.11 Mastery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #065f46; padding: 1.5rem 2rem 1rem; max-width: 900px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #065f46; }
+    h1 { font-size: 1.9rem; font-weight: 700; margin: 0.3rem 0 0.4rem; }
+    .deck { font-size: 1rem; color: #444; font-style: italic; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; } nav a:hover { text-decoration: underline; }
+    main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #065f46; border-top: 3px solid #065f46; padding-top: 0.4rem; margin: 2.5rem 0 1rem; }
+    .day-card { border: 1px solid #e0e0e0; border-left: 4px solid #065f46; background: #fff; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; }
+    .day-card .day-num { font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #065f46; font-weight: 600; margin-bottom: 0.3rem; }
+    .day-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .prereq { display: inline-block; background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.8rem; }
+    .block-label { font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #555; margin: 1rem 0 0.3rem; }
+    .socratic { background: #f0fdf4; border-left: 3px solid #065f46; padding: 0.8rem 1rem; margin: 0.5rem 0; font-style: italic; font-size: 0.92rem; color: #333; }
+    .lab-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.8rem 1rem; margin: 0.5rem 0; font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; }
+    .lab-box .lab-title { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.08em; color: #065f46; margin-bottom: 0.4rem; }
+    .framework-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.8rem; margin: 0.8rem 0; }
+    .framework-box { background: #fff; border: 1px solid #bbf7d0; padding: 0.6rem 0.8rem; }
+    .framework-box .fb-title { font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: #065f46; }
+    .framework-box p { font-size: 0.78rem; color: #555; margin-top: 0.2rem; }
+    code { font-family: 'SF Mono','Fira Mono',monospace; font-size: 0.82rem; background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 2px; }
+    .reading { font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; color: #555; }
+    .reading strong { color: #1a1a1a; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 900px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">Phase 6 &nbsp;&bull;&nbsp; Field Troubleshooting Capstone &nbsp;&bull;&nbsp; 4 days &nbsp;&bull;&nbsp; ~7 hours &nbsp;&bull;&nbsp; Terminal Phase</p>
+  <h1>Field Troubleshooting Capstone</h1>
+  <p class="deck">Apply all five phases against the WLPC 2026 framework — ending with a client-ready incident report.</p>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_80211_index.html">Hub</a>
+    <a href="study_phase5_capacity.html">&larr; Phase 5</a>
+    <a href="#day1">Day 1</a><a href="#day2">Day 2</a><a href="#day3">Day 3</a><a href="#day4">Day 4</a>
+  </nav>
+</header>
+<main>
+
+  <span class="section-label" id="day1">Day 1</span>
+  <div class="day-card">
+    <div class="day-num">Day 1 of 4</div>
+    <h2>WLPC 2026 Six-Process Framework</h2>
+    <span class="prereq">Prereq: All phases 1–5 complete</span>
+
+    <div class="framework-grid">
+      <div class="framework-box"><div class="fb-title">Manage</div><p>Scope, stakeholders, SLA definition, change window</p></div>
+      <div class="framework-box"><div class="fb-title">Investigate</div><p>Symptoms, history, topology, known-good baseline</p></div>
+      <div class="framework-box"><div class="fb-title">Measure</div><p>RSSI, SNR, retry %, channel utilization, DHCP timing</p></div>
+      <div class="framework-box"><div class="fb-title">Validate</div><p>Compare measured vs expected; confirm scope of impact</p></div>
+      <div class="framework-box"><div class="fb-title">Analyze</div><p>Root cause from evidence; eliminate alternates systematically</p></div>
+      <div class="framework-box"><div class="fb-title">Interrogate</div><p>Packet capture, decode, frame-level proof of hypothesis</p></div>
+    </div>
+
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">In the May 6 GTK rotation cascade incident: which of the six WLPC processes was skipped on the first attempt — and which process was the one that finally produced the ground-truth evidence that confirmed the root cause?</div>
+    <div class="socratic">The WLPC framework puts "Interrogate" last. Why is running a packet capture as the first step actually counterproductive — and what should you have from the "Measure" stage before opening Wireshark?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>WLANPros Troubleshooting — WLPC Express 2026 (1).pdf</strong> pp.1–20<br><strong>reference_wlpc_2026_troubleshooting.md</strong> (memory)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">Full Framework Run — PPSK Client Onboarding</div>
+      New iPhone joining KB_School PPSK SSID (fresh join, not cached) &rarr; run WLPC framework from MANAGE to INTERROGATE &rarr; document every measurement at each stage &rarr; produce a 6-row evidence table (one row per process) before looking at any Wireshark decode.
+    </div>
+  </div>
+
+  <span class="section-label" id="day2">Day 2</span>
+  <div class="day-card">
+    <div class="day-num">Day 2 of 4</div>
+    <h2>30-Row Causes Table — WIRELESS / LOCAL NET / INTERNET</h2>
+    <span class="prereq">Prereq: Day 1 (6-process framework)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">For the symptom "DHCP NAK at client": which 4 rows of the 30-row causes table must be eliminated first — and for each, what's the single fastest check (AP command, SW1 command, or Wireshark filter) that rules it out?</div>
+    <div class="socratic">The 30-row table splits causes into WIRELESS, LOCAL NET, and INTERNET columns. If a client can ping the gateway but can't reach an HTTPS server, which column do you skip entirely — and why does that save 10 minutes in a real incident?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>WLPC Express 2026 PDF</strong> — 30-row causes table (full)<br><strong>reference_dhcp_wifi_triage_runbook.md</strong> (memory)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">Reproduce DHCP Failure + Walk the Table</div>
+      Block VLAN10 on SW1 trunk port toward AP1 (<code>configure vlan VLAN10 delete ports &lt;ap-port&gt;</code>) &rarr; iPhone attempts to join Students PPSK &rarr; walk the 30-row table from the top &rarr; identify the correct row within 3 rows &rarr; confirm with <code>show fdb ports &lt;ap-port&gt;</code> and <code>show vlan detail VLAN10</code> &rarr; restore port.
+    </div>
+  </div>
+
+  <span class="section-label" id="day3">Day 3</span>
+  <div class="day-card">
+    <div class="day-num">Day 3 of 4</div>
+    <h2>Frame Stats Interpretation — Retries, BAR, Retry % Thresholds</h2>
+    <span class="prereq">Prereq: Phase 2 Day 3 (A-MPDU, BlockAck); Day 1–2 (WLPC framework)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">AP1 <code>show wifi stats</code> shows 18% retry rate for one client but 4% cell-wide. What are the 3 most likely per-client causes — and which single Wireshark filter lets you confirm the dominant one in under 2 minutes?</div>
+    <div class="socratic">A BAR (BlockAck Request) without a preceding burst of data frames is a red flag. What sequence of events forces an AP to send a standalone BAR — and what does it tell you about the client's receive-side state?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>WLPC 2026 PDF</strong> — frame stats thresholds<br><strong>WLAN Pros Master/ Wireshark macros</strong> (T3 — dfilters, coloring rules)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">Per-Client Retry Chart</div>
+      AP1 capture during bulk transfer (iPerf3) from MacBook &rarr; Wireshark filter <code>wlan.fc.retry == 1</code> &rarr; apply WLAN Pros coloring rules &rarr; IO Graph: retry frames per second &rarr; filter by client MAC &rarr; identify peak retry burst &rarr; correlate with SNR using <code>wlan_radio.signal_dbm</code>.
+    </div>
+  </div>
+
+  <span class="section-label" id="day4">Day 4</span>
+  <div class="day-card">
+    <div class="day-num">Day 4 of 4 — Capstone</div>
+    <h2>Build the WLPC Capstone Report</h2>
+    <span class="prereq">Prereq: All days 1–3 of Phase 6; May 7 DHCP incident context (from memory)</span>
+    <div class="block-label">Task</div>
+    <p style="margin-bottom:0.8rem;font-size:0.9rem">Write a 1-page client-ready incident report for the <strong>May 7 DHCP incident</strong> (WPA2 TK desync + GTK rotation cascade), using only WLPC 2026 framework headers as section titles. No Wireshark screenshots — findings only, in plain language a network manager can read.</p>
+    <div class="socratic">Before writing: identify which of the 6 processes produced each piece of evidence. Which process gave you the "before/after pcap on the same Guest LAA MAC" that confirmed the root cause — and which process confirmed the fix held?</div>
+    <div class="block-label">Output</div>
+    <div class="lab-box">
+      <div class="lab-title">Deliverable: study_capstone_report.html</div>
+      Create <code>docs/study_capstone_report.html</code> in this repo &rarr; NYT style &rarr; 6 sections (one per WLPC process) &rarr; Problem Statement, Evidence, Root Cause, Fix Applied, Validation, Lessons &rarr; link from this page and from <code>study_80211_index.html</code>.
+    </div>
+
+    <div class="block-label">Curriculum Completion Checkpoint</div>
+    <div class="socratic">WLANPros v5 "Top 20" checklist — go through all 20 items without external reference. For any item you can't answer: note the Phase and Day that covers it and schedule a review session.</div>
+  </div>
+
+  <div style="margin-top:2rem;padding:1.2rem;background:#f0fdf4;border:1px solid #bbf7d0;font-family:'Libre Franklin',sans-serif;font-size:0.85rem;">
+    <strong style="color:#065f46;font-size:0.9rem">Curriculum Complete.</strong><br>
+    You've covered: OFDM → MCS → DFS → 6 GHz → MU-MIMO → MLO → EDCA → TWT → power save → multicast → PMK-R0/R1/FT → SAE H2E → MFP → OWE → EAP-TLS → BTM → DSCP trust → voice budget → sticky clients → airtime math → SSID overhead → co-channel → Wi-Fi 7 → WLPC 6-process → capstone report.<br><br>
+    <a href="study_capstone_report.html" style="color:#065f46;font-weight:700">View Capstone Report &rarr;</a> &nbsp;&nbsp;
+    <a href="../index.html" style="color:#065f46;font-weight:700">Back to Home &rarr;</a>
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; Phase 6 — Field Troubleshooting Capstone &nbsp;&bull;&nbsp; Terminal Phase</footer>
+</body>
+</html>

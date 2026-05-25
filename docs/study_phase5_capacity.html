@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 5 — Capacity Planning &amp; HDD | 802.11 Mastery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #1d4ed8; padding: 1.5rem 2rem 1rem; max-width: 900px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #1d4ed8; }
+    h1 { font-size: 1.9rem; font-weight: 700; margin: 0.3rem 0 0.4rem; }
+    .deck { font-size: 1rem; color: #444; font-style: italic; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; } nav a:hover { text-decoration: underline; }
+    main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #1d4ed8; border-top: 3px solid #1d4ed8; padding-top: 0.4rem; margin: 2.5rem 0 1rem; }
+    .day-card { border: 1px solid #e0e0e0; border-left: 4px solid #1d4ed8; background: #fff; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; }
+    .day-card .day-num { font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #1d4ed8; font-weight: 600; margin-bottom: 0.3rem; }
+    .day-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .prereq { display: inline-block; background: #eff6ff; border: 1px solid #bfdbfe; color: #1e40af; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.8rem; }
+    .block-label { font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #555; margin: 1rem 0 0.3rem; }
+    .socratic { background: #eff6ff; border-left: 3px solid #1d4ed8; padding: 0.8rem 1rem; margin: 0.5rem 0; font-style: italic; font-size: 0.92rem; color: #333; }
+    .lab-box { background: #eff6ff; border: 1px solid #bfdbfe; padding: 0.8rem 1rem; margin: 0.5rem 0; font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; }
+    .lab-box .lab-title { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.08em; color: #1d4ed8; margin-bottom: 0.4rem; }
+    code { font-family: 'SF Mono','Fira Mono',monospace; font-size: 0.82rem; background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 2px; }
+    .reading { font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; color: #555; }
+    .reading strong { color: #1a1a1a; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 900px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">Phase 5 &nbsp;&bull;&nbsp; Capacity Planning &amp; High-Density Design &nbsp;&bull;&nbsp; 5 days &nbsp;&bull;&nbsp; ~9 hours</p>
+  <h1>Capacity Planning &amp; High-Density Design</h1>
+  <p class="deck">Airtime math, SSID overhead, co-channel contention, and the Wi-Fi 7 capacity ceiling — grounded in the Revolution Wi-Fi planner.</p>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_80211_index.html">Hub</a>
+    <a href="study_phase4_qos_roaming.html">&larr; Phase 4</a>
+    <a href="#day1">Day 1</a><a href="#day2">Day 2</a><a href="#day3">Day 3</a><a href="#day4">Day 4</a><a href="#day5">Day 5</a>
+    <a href="study_phase6_capstone.html">Phase 6 &rarr;</a>
+  </nav>
+</header>
+<main>
+
+  <span class="section-label" id="day1">Day 1</span>
+  <div class="day-card">
+    <div class="day-num">Day 1 of 5</div>
+    <h2>Airtime Math — Time-on-Air per MCS × Frame Size + Overheads</h2>
+    <span class="prereq">Prereq: Phase 1 Day 1–2 (OFDM, MCS); Phase 2 Day 1 (EDCA)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">30 clients each push 2 Mbps at MCS 5 (52 Mbps PHY rate) on 40 MHz. Using the airtime formula: ToA = (frame_size / PHY_rate) + SIFS + ACK_duration + DIFS + backoff. What's the projected channel utilization — and at what client count does it exceed 80%?</div>
+    <div class="socratic">The Rev Wi-Fi planner uses "medium time" as the primary capacity unit. Why is medium time a better capacity metric than throughput in Mbps — especially in a mixed MCS environment?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Revolution Wi-Fi Capacity Planner User Guide pp.1–20</strong> — airtime formula, Network Design inputs<br><strong>Wi-Fi SSID Overhead Calculator.xlsx</strong></p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">Rev Wi-Fi Planner — AP3000 + iPhone/MacBook Mix</div>
+      Open Revolution Wi-Fi Capacity Planner XLSM &rarr; populate Network Design tab: AP3000 (AP type), 2× clients (iPhone 2SS, MacBook 2SS), 40 MHz 5 GHz, 802.11ax &rarr; set demand: 2 Mbps per client, 30 clients &rarr; record Capacity Demand row output &rarr; note the airtime % at that load.
+    </div>
+  </div>
+
+  <span class="section-label" id="day2">Day 2</span>
+  <div class="day-card">
+    <div class="day-num">Day 2 of 5</div>
+    <h2>RF Coverage Tiers — −67/−72/−75 dBm, RSSI Asymmetry</h2>
+    <span class="prereq">Prereq: Phase 1 Day 2 (MCS/SNR floor)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">WLPC requires −67 dBm as the primary coverage tier for voice. Why is the design RSSI asymmetric between uplink and downlink — and which direction is the constraint when the AP has 4 antennas and the iPhone has 2?</div>
+    <div class="socratic">The Rev Wi-Fi planner sets a "minimum MCS gate" — it won't count a client toward capacity if their RSSI puts them below a minimum MCS. Why is this gate necessary, and what happens to cell throughput when you remove it?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Revolution Wi-Fi Capacity Planner pp.21–38</strong> — RF Coverage Design, RSSI tiers, Capacity Results<br><strong>Aruba VHD Planning</strong> (T2) — RSSI design levels</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">RSSI Walktest with WiFi Explorer Pro</div>
+      Open WiFi Explorer Pro on MacBook &rarr; walk 3 positions: 1m, 5m, 10m from AP1 &rarr; record RSSI at each position for AP1 5 GHz BSSID &rarr; map to MCS tier using Day 2 Phase 1 table &rarr; compare to planner's RSSI tier thresholds.
+    </div>
+  </div>
+
+  <span class="section-label" id="day3">Day 3</span>
+  <div class="day-card">
+    <div class="day-num">Day 3 of 5</div>
+    <h2>SSID Overhead — Beacon Airtime Cost per SSID per Band</h2>
+    <span class="prereq">Prereq: Day 1 (airtime math)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Each SSID adds one beacon per beacon interval per band. At a 100 TU beacon interval with 4 SSIDs, and assuming beacons are sent at the lowest mandatory rate (6 Mbps on 5 GHz), what's the beacon-only airtime overhead as a percentage of total medium time — and why does this compound with legacy client rates?</div>
+    <div class="socratic">The SSID Overhead Calculator shows that adding a 4th SSID costs ~8% airtime even with zero clients. Why does the overhead increase linearly with SSID count rather than staying flat?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Wi-Fi SSID Overhead Calculator.xlsx</strong><br><strong>Aruba VHD Planning</strong> — SSID design guidelines (T2)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">Beacon-Only Airtime Measurement</div>
+      XIQ — add a temporary 4th SSID on AP1 &rarr; AP1 capture for 60 seconds with zero clients &rarr; Wireshark IO Graphs: filter <code>wlan.fc.type_subtype == 0x08</code> (beacons) &rarr; measure beacon frame rate per second &rarr; calculate airtime: beacon_count × ToA_per_beacon &rarr; compare pre/post 4th SSID.
+    </div>
+  </div>
+
+  <span class="section-label" id="day4">Day 4</span>
+  <div class="day-card">
+    <div class="day-num">Day 4 of 5</div>
+    <h2>Co-Channel Contention vs Adjacent-Channel Interference</h2>
+    <span class="prereq">Prereq: Phase 1 Day 3 (channel widths, primary/secondary); Day 1 (airtime)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">"The Fallacy of Channel Overlap" argues 2 APs on the same channel is better than 2 APs on adjacent channels in a dense reuse pattern. Why — and at what inter-AP distance does the equation flip?</div>
+    <div class="socratic">Co-channel contention causes CSMA deferral — APs hear each other and take turns. Adjacent-channel interference causes MAC-layer collisions that the receiver can't decode. Which one is more damaging to voice traffic quality — and why?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>The Fallacy of Channel Overlap.pdf</strong> (×2 in corpus — both versions)</p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">CCA Deferral Observation</div>
+      If a second test radio is available: place both APs on the same channel 5m apart &rarr; AP1 capture &rarr; observe CCA deferral events in Wireshark via <code>show wifi channel-utilization</code> on AP1 &rarr; measure retry rate vs adjacent-channel scenario (change to ch 36/40) &rarr; compare.
+    </div>
+  </div>
+
+  <span class="section-label" id="day5">Day 5</span>
+  <div class="day-card">
+    <div class="day-num">Day 5 of 5</div>
+    <h2>Wi-Fi 7 Capacity Model — MLO + Multi-RU + 320 MHz Ceiling</h2>
+    <span class="prereq">Prereq: Phase 1 Day 8 (Wi-Fi 7 PHY); Day 1–2 (airtime, RSSI tiers)</span>
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">320 MHz channels only exist in 6 GHz. An iPhone 15 has 2 spatial streams and supports MLO STR. In a 30-client meeting room, what's the realistic per-client throughput ceiling — and how does it change when 20 of the 30 clients are iPhone 14 (no MLO)?</div>
+    <div class="socratic">The Rev Wi-Fi planner v2 has a Wi-Fi 7 sheet. It models EMLSR separately from STR. When does MLO STR provide throughput gain, when does it provide latency reduction, and when does it provide neither?</div>
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>802.11be-2024.pdf §35</strong> — MLO capacity model, multi-RU<br><strong>Revolution Wi-Fi Capacity Planner v2 — Wi-Fi 7 sheet</strong></p>
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">AP3000 EHT Capability → Planner Input</div>
+      <code>show wifi radio</code> on AP1 → record: max NSS, max channel width, MLO support &rarr; open Rev Wi-Fi Planner Wi-Fi 7 sheet &rarr; input AP3000 + iPhone 15 mix (2SS, MLO) &rarr; 30 clients, 5 Mbps demand each &rarr; record projected capacity utilization &rarr; compare to 11ax baseline from Day 1.
+    </div>
+
+    <div class="block-label">Phase 5 Checkpoint — Mini Design</div>
+    <div class="socratic">Produce a 1-page capacity design for the KhKLab room: state the design RSSI, minimum MCS gate, maximum client count, SSID count, and channel plan. Cite the planner output for each value.</div>
+  </div>
+
+  <div style="margin-top:2rem;padding:1rem;background:#eff6ff;border:1px solid #bfdbfe;font-family:'Libre Franklin',sans-serif;font-size:0.82rem;">
+    <strong style="color:#1d4ed8">Phase 5 Complete?</strong> &nbsp; Proceed to
+    <a href="study_phase6_capstone.html" style="color:#1d4ed8;font-weight:700">Phase 6 — Field Troubleshooting Capstone &rarr;</a>
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; Phase 5 — Capacity Planning &amp; High-Density Design</footer>
+</body>
+</html>

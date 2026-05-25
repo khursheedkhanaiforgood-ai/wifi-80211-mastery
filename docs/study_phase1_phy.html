@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phase 1 — PHY &amp; RF Internals | 802.11 Mastery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #134e4a; padding: 1.5rem 2rem 1rem; max-width: 900px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #134e4a; }
+    h1 { font-size: 1.9rem; font-weight: 700; margin: 0.3rem 0 0.4rem; }
+    .deck { font-size: 1rem; color: #444; font-style: italic; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; }
+    nav a:hover { text-decoration: underline; }
+    main { max-width: 900px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #134e4a; border-top: 3px solid #134e4a; padding-top: 0.4rem; margin: 2.5rem 0 1rem; }
+    .day-card { border: 1px solid #e0e0e0; border-left: 4px solid #134e4a; background: #fff; padding: 1.4rem 1.6rem; margin-bottom: 1.2rem; }
+    .day-card .day-num { font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #134e4a; font-weight: 600; margin-bottom: 0.3rem; }
+    .day-card h2 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .prereq { display: inline-block; background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534; font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; padding: 0.15rem 0.5rem; border-radius: 3px; margin-bottom: 0.8rem; }
+    .block-label { font-family: 'Libre Franklin', sans-serif; font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #555; margin: 1rem 0 0.3rem; }
+    .socratic { background: #f8f7f4; border-left: 3px solid #134e4a; padding: 0.8rem 1rem; margin: 0.5rem 0; font-style: italic; font-size: 0.92rem; color: #333; }
+    .lab-box { background: #f0fdf4; border: 1px solid #bbf7d0; padding: 0.8rem 1rem; margin: 0.5rem 0; font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; }
+    .lab-box .lab-title { font-weight: 700; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.08em; color: #065f46; margin-bottom: 0.4rem; }
+    code { font-family: 'SF Mono', 'Fira Mono', monospace; font-size: 0.82rem; background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 2px; }
+    .reading { font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; color: #555; }
+    .reading strong { color: #1a1a1a; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 900px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">Phase 1 &nbsp;&bull;&nbsp; PHY &amp; RF Internals &nbsp;&bull;&nbsp; 8 days &nbsp;&bull;&nbsp; ~12 hours</p>
+  <h1>PHY &amp; RF Internals</h1>
+  <p class="deck">OFDM symbol structure through Wi-Fi 7 MLO — starting at the subcarrier, not the antenna.</p>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_80211_index.html">Hub</a>
+    <a href="#day1">Day 1</a><a href="#day2">Day 2</a><a href="#day3">Day 3</a><a href="#day4">Day 4</a>
+    <a href="#day5">Day 5</a><a href="#day6">Day 6</a><a href="#day7">Day 7</a><a href="#day8">Day 8</a>
+    <a href="study_phase2_mac.html">Phase 2 &rarr;</a>
+  </nav>
+</header>
+<main>
+
+  <span class="section-label" id="day1">Day 1</span>
+  <div class="day-card">
+    <div class="day-num">Day 1 of 8</div>
+    <h2>OFDM Symbol Structure &amp; Subcarrier Spacing</h2>
+    <span class="prereq">Prereq: basic RF — path loss, dBm, RSSI. No earlier days required.</span>
+
+    <div class="block-label">Socratic Question</div>
+    <div class="socratic">If 802.11ax uses 78.125 kHz subcarrier spacing instead of 312.5 kHz (11ac), why does the symbol time grow 4×, and what does that buy you in a dense multipath environment?</div>
+    <div class="socratic">OFDM uses a cyclic prefix to absorb multipath delay spread. If you lengthen the symbol, what happens to the CP overhead as a percentage — and when does that trade-off break down?</div>
+
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>80211-2024.pdf §17</strong> — OFDM PHY (subcarrier count, spacing, symbol duration table across amendments)<br>
+    <strong>802.11be - Wi-Fi 7.pdf</strong> — EHT PHY section, subcarrier comparison table</p>
+
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">AP1 (AP3000) — Beacon Capture + HE Capabilities IE Decode</div>
+      SSH to AP1 &rarr; run <code>capture interface wifi0 duration 30</code> &rarr; pull PCAP to MacBook &rarr; open in Wireshark &rarr; filter <code>wlan.fc.type_subtype == 0x08</code> (beacons) &rarr; expand <strong>HE Capabilities IE</strong> and <strong>EHT Capabilities IE</strong> &rarr; record: subcarrier spacing, max NSS, supported channel widths.
+      <br><br>Compare to <code>show wifi0 radio</code> output on AP1 — verify IE matches runtime config.
+    </div>
+
+    <div class="block-label">Close-Out Check</div>
+    <p style="font-size:0.85rem">Can you explain in one sentence why 802.11ax chose narrower subcarriers without reading notes?</p>
+  </div>
+
+  <span class="section-label" id="day2">Day 2</span>
+  <div class="day-card">
+    <div class="day-num">Day 2 of 8</div>
+    <h2>MCS Index Mechanics — SNR Floor, Cell-Edge Collapse</h2>
+    <span class="prereq">Prereq: Day 1 (OFDM symbol structure)</span>
+
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">MCS 11 (1024-QAM) needs ~35 dB SNR; MCS 7 (64-QAM) needs ~25 dB. Why does doubling the constellation density cost 10 dB SNR — what's the fundamental coding-gain limit?</div>
+    <div class="socratic">In a cell-edge design, if your minimum RSSI is −72 dBm and noise floor is −95 dBm, what's the usable MCS ceiling — and what does the MCS step-down pattern look like as a client walks away from the AP?</div>
+
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>802.11ac - VHT - MCS, SNR and RSSI.pdf</strong> — full MCS table with minimum SNR per stream<br>
+    <strong>dB Math in 5 Minutes Handout.pdf</strong> — SNR arithmetic, noise floor formula</p>
+
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">iPerf3 MCS Walk Test</div>
+      Run iPerf3 server on a wired host connected to SW1 &rarr; run iPerf3 client on MacBook at three positions (1m, 5m, far corner) &rarr; after each run, capture <code>show wifi station &lt;mac&gt;</code> on AP1 to record negotiated MCS and SS count &rarr; plot RSSI vs MCS vs throughput in a simple table.
+    </div>
+  </div>
+
+  <span class="section-label" id="day3">Day 3</span>
+  <div class="day-card">
+    <div class="day-num">Day 3 of 8</div>
+    <h2>Channel Widths 20/40/80/160/320 MHz — Primary/Secondary Signalling</h2>
+    <span class="prereq">Prereq: Day 1–2</span>
+
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">If a neighbor BSS uses 80 MHz with primary on channel 36 and you set your primary on channel 40 with 80 MHz width, what does 802.11ac dynamic bandwidth selection do per-frame — and which AP backs off?</div>
+    <div class="socratic">Why does 160 MHz continuous bandwidth use a single contiguous block while 80+80 uses two separate 80 MHz segments — and what's the PPDU overhead difference?</div>
+
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>802.11be-2024.pdf §27</strong> — channel width signalling, EHT Operation IE<br>
+    <strong>The Fallacy of Channel Overlap.pdf</strong> — why "non-overlapping" is a myth at 40 MHz+</p>
+
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">XIQ Channel Width Change + Beacon IE Comparison</div>
+      Change AP1 channel width in XIQ (80 MHz → 40 MHz → 20 MHz) &rarr; capture beacons before/after each change &rarr; decode <strong>HT Operation IE</strong> and <strong>VHT Operation IE</strong> in Wireshark &rarr; verify primary/secondary channel fields update correctly.
+    </div>
+  </div>
+
+  <span class="section-label" id="day4">Day 4</span>
+  <div class="day-card">
+    <div class="day-num">Day 4 of 8</div>
+    <h2>5 GHz DFS &amp; FCC Channels — Radar Detection Cascade</h2>
+    <span class="prereq">Prereq: Day 3 (channel width, primary/secondary)</span>
+
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Why does DFS detection on the secondary 20 MHz channel force the primary off-channel and not just vacate the secondary? What does the standard actually require?</div>
+    <div class="socratic">The FCC mandates a 30-minute non-occupancy period after a radar hit. If your AP is on U-NII-2C and gets a hit, which specific channels are blocked, and can clients reconnect immediately on U-NII-1?</div>
+
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>6_Dynamic Frequency Selection and the 5GHz Unlicensed Band.pdf</strong><br>
+    <strong>FCC DFS Measurement.pdf</strong></p>
+
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">AP1 Channel Event Log</div>
+      <code>show wifi channel-events</code> on AP1 &rarr; trigger an XIQ background scan &rarr; observe any DFS channel changes logged &rarr; if AP1 is on U-NII-2A/2C, capture a CSA (Channel Switch Announcement) beacon in Wireshark and decode the CSA IE.
+    </div>
+  </div>
+
+  <span class="section-label" id="day5">Day 5</span>
+  <div class="day-card">
+    <div class="day-num">Day 5 of 8</div>
+    <h2>6 GHz / Wi-Fi 6E — PSC, AFC, OOB Discovery</h2>
+    <span class="prereq">Prereq: Day 3–4</span>
+
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">If your client only scans Preferred Scanning Channels (PSCs) in 6 GHz, what's the cost of placing your AP on a non-PSC channel — and how does a Reduced Neighbor Report (RNR) in a 5 GHz beacon recover the discovery?</div>
+    <div class="socratic">AFC (Automated Frequency Coordination) is mandatory for standard-power 6 GHz APs. What database does the AP query, how often, and what happens if the AFC lookup fails?</div>
+
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Apple Wireless Documents — 6E set</strong> (T2 reference)<br>
+    <strong>802.11be-2024.pdf</strong> — 6 GHz discovery, FILS, UPR</p>
+
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">RNR IE Capture</div>
+      Enable 6 GHz radio on AP1 in XIQ &rarr; capture beacons on 5 GHz band &rarr; locate <strong>Reduced Neighbor Report IE</strong> in Wireshark &rarr; decode BSSID + channel pointing at 6 GHz radio &rarr; compare to AP1 <code>show wifi radio</code> 6 GHz channel.
+    </div>
+  </div>
+
+  <span class="section-label" id="day6">Day 6</span>
+  <div class="day-card">
+    <div class="day-num">Day 6 of 8</div>
+    <h2>MU-MIMO vs OFDMA — When Each Wins</h2>
+    <span class="prereq">Prereq: Day 1–2 (OFDM, MCS)</span>
+
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">A meeting room has 30 phones each doing 100 kbps voice (small, frequent frames). MU-MIMO or OFDMA — which scheduler wins, and why does the frame size matter more than the client count here?</div>
+    <div class="socratic">DL MU-MIMO sends different data to multiple clients simultaneously using spatial separation. DL OFDMA sends different data on different subcarrier groups. For a client doing a 4 MB file download, which gives more peak throughput and why?</div>
+
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>WiFi-6-For-Dummies_-Extreme-Networks-2nd-Special-Edition.pdf</strong> (T1)<br>
+    <strong>Wi-Fi 6 Graphic - Mist.pdf</strong></p>
+
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">Trigger Frame Capture</div>
+      With AP1 in 11ax mode, connect two clients &rarr; capture downlink frames &rarr; Wireshark filter <code>wlan.he_trigger</code> &rarr; identify <strong>HE Trigger Frame</strong> &rarr; decode RU allocation fields (RU index, RU size) &rarr; confirm which clients share the channel via OFDMA.
+    </div>
+  </div>
+
+  <span class="section-label" id="day7">Day 7</span>
+  <div class="day-card">
+    <div class="day-num">Day 7 of 8</div>
+    <h2>Spatial Streams, TxBF Sounding — NDP/NDPA, Implicit vs Explicit</h2>
+    <span class="prereq">Prereq: Day 6 (MU-MIMO)</span>
+
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Why does an iPhone with 2 spatial streams still benefit from the AP using 4 antennas for beamforming — what does the extra antenna aperture actually do for a 2SS client?</div>
+    <div class="socratic">Explicit beamforming requires the client to feed back a channel matrix (V matrix). How often does the AP re-sound — and what happens to beamforming gain in a fast-moving client vs a stationary one?</div>
+
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>Aruba VHD Theory PDF</strong> (T2 reference) — beamforming sounding procedure</p>
+
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">NDPA / NDP Sounding Capture</div>
+      Capture with AP1 &rarr; Wireshark filter <code>wlan.fc.type_subtype == 0x0005</code> (VHT NDP Announcement) &rarr; locate NDP Announcement + Null Data Packet pair &rarr; observe sounding interval (time between consecutive NDPA frames) &rarr; record Receiver Address and STA Info fields.
+    </div>
+  </div>
+
+  <span class="section-label" id="day8">Day 8</span>
+  <div class="day-card">
+    <div class="day-num">Day 8 of 8</div>
+    <h2>Wi-Fi 7 PHY — 320 MHz, 4K-QAM, MLO Link Types, Multi-RU</h2>
+    <span class="prereq">Prereq: Day 1–7 (all PHY topics)</span>
+
+    <div class="block-label">Socratic Questions</div>
+    <div class="socratic">Wi-Fi 7 introduces MLO with STR (Simultaneous Transmit/Receive), NSTR, eMLSR, and eMPSR modes. When does STR fail and fall back to EMLSR — and what's the airtime cost of that fallback?</div>
+    <div class="socratic">Multi-RU allows a single client to occupy multiple RU allocations in one PPDU. What constraint does the standard place on which RU combinations are valid, and why does that constraint exist?</div>
+
+    <div class="block-label">Reading (T1 Corpus)</div>
+    <p class="reading"><strong>802.11be-2024.pdf §35</strong> — EHT PHY, MLO operation, multi-RU allocation rules<br>
+    <strong>80211be-2024.pdf</strong> — MLO link establishment, TTLM</p>
+
+    <div class="block-label">Lab Exercise</div>
+    <div class="lab-box">
+      <div class="lab-title">AP3000 EHT Capability Inspection</div>
+      <code>show wifi radio</code> on AP1 &rarr; capture beacon from AP1 in Wireshark &rarr; decode <strong>EHT Capabilities IE</strong> and <strong>EHT Operation IE</strong> &rarr; record: max NSS, supported channel widths, MLO support flag &rarr; compare to AP3000 datasheet spec.
+    </div>
+
+    <div class="block-label">Phase 1 Checkpoint</div>
+    <div class="socratic">Without notes: explain why 11ax chose 78.125 kHz subcarrier spacing, give the SNR floor for MCS 11, identify what a PSC channel is and why it matters, and describe what MLO STR requires to avoid RF collision — all in under 4 minutes.</div>
+  </div>
+
+  <div style="margin-top:2rem;padding:1rem;background:#f0fdf4;border:1px solid #bbf7d0;font-family:'Libre Franklin',sans-serif;font-size:0.82rem;">
+    <strong style="color:#065f46">Phase 1 Complete?</strong> &nbsp; Verify WLANPros v5 "Top 20" rows on RF coverage, then proceed to
+    <a href="study_phase2_mac.html" style="color:#065f46;font-weight:700">Phase 2 — MAC &amp; Frame Exchange &rarr;</a>
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; Phase 1 — PHY &amp; RF Internals &nbsp;&bull;&nbsp; WLPC corpus: private reference only, not reproduced.</footer>
+</body>
+</html>
