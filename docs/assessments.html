@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assessments — 6 Phase Quizzes + CWNA-108 Mock | 802.11 Mastery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #1a1a1a; padding: 1.5rem 2rem 1rem; max-width: 1000px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #666; }
+    h1 { font-size: 2rem; font-weight: 700; margin: 0.3rem 0 0.4rem; }
+    .deck { font-size: 1rem; color: #444; font-style: italic; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; } nav a:hover { text-decoration: underline; }
+    main { max-width: 1000px; margin: 0 auto; padding: 2rem; }
+    .quiz-header { padding: 1.2rem 1.6rem; margin: 2rem 0 1rem; border-left: 5px solid; background: #fff; border-top: 1px solid #e5e5e5; border-right: 1px solid #e5e5e5; border-bottom: 1px solid #e5e5e5; }
+    .quiz-header.phase1 { border-left-color: #134e4a; }
+    .quiz-header.phase2 { border-left-color: #7c2d12; }
+    .quiz-header.phase3 { border-left-color: #9d174d; }
+    .quiz-header.phase4 { border-left-color: #581c87; }
+    .quiz-header.phase5 { border-left-color: #1d4ed8; }
+    .quiz-header.phase6 { border-left-color: #065f46; }
+    .quiz-header.cwna { border-left-color: #1a1a1a; }
+    .quiz-tag { font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 700; margin-bottom: 0.3rem; }
+    .quiz-header h2 { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.3rem; }
+    .quiz-meta { font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; color: #555; }
+    .question { background: #fff; border: 1px solid #e0e0e0; padding: 1.1rem 1.4rem; margin-bottom: 0.8rem; }
+    .qnum { font-family: 'Libre Franklin', sans-serif; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 700; color: #666; margin-bottom: 0.4rem; }
+    .qbody { font-size: 0.96rem; color: #1a1a1a; line-height: 1.6; }
+    .qbody.calc { font-family: 'SF Mono','Fira Mono',monospace; font-size: 0.88rem; background: #fafaf6; padding: 0.6rem 0.9rem; margin: 0.5rem 0; border-left: 2px solid #ccc; }
+    .qbody ul { margin: 0.5rem 0 0 1.4rem; }
+    .qbody ul li { font-size: 0.92rem; margin: 0.15rem 0; font-family: 'Libre Franklin', sans-serif; }
+    .qbody code { font-family: 'SF Mono','Fira Mono',monospace; font-size: 0.84rem; background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 2px; }
+    details.answer { margin-top: 0.7rem; background: #f8f7f4; border: 1px dashed #c5c2b6; padding: 0.5rem 0.8rem; cursor: pointer; }
+    details.answer summary { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; font-weight: 700; color: #666; letter-spacing: 0.06em; text-transform: uppercase; }
+    details.answer[open] summary { margin-bottom: 0.5rem; color: #1a1a1a; }
+    details.answer .ans-body { font-size: 0.9rem; color: #333; line-height: 1.55; font-family: 'Libre Franklin', sans-serif; padding: 0.3rem 0; }
+    details.answer .ans-body strong { color: #1a1a1a; }
+    details.answer .ans-body em { color: #666; }
+    .scoring { background: #fffbeb; border-left: 3px solid #b45309; padding: 0.8rem 1rem; margin: 1rem 0 1.5rem; font-family: 'Libre Franklin', sans-serif; font-size: 0.85rem; color: #78350f; }
+    .scoring strong { color: #92400e; }
+    .mc-options { margin-top: 0.5rem; padding-left: 1.5rem; font-family: 'Libre Franklin', sans-serif; font-size: 0.9rem; }
+    .mc-options li { margin: 0.2rem 0; list-style-type: upper-alpha; }
+    .toc { display: grid; grid-template-columns: repeat(auto-fill,minmax(180px,1fr)); gap: 0.6rem; margin: 1rem 0 2rem; }
+    .toc a { display: block; padding: 0.7rem 0.9rem; border: 1px solid #ddd; text-decoration: none; color: #1a1a1a; font-family: 'Libre Franklin', sans-serif; font-size: 0.82rem; background: #fff; }
+    .toc a:hover { background: #f7f7f4; }
+    .toc a strong { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: #666; margin-bottom: 0.2rem; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 1000px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">KhKLab &nbsp;&bull;&nbsp; Assessments &nbsp;&bull;&nbsp; 6 phase quizzes + CWNA-108 mock</p>
+  <h1>Assessments</h1>
+  <p class="deck">Take each quiz <em>before</em> peeking at the answer. The reveal block is for self-scoring only.</p>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_80211_index.html">Hub</a>
+    <a href="references.html">References</a>
+    <a href="#q1">Phase 1</a><a href="#q2">Phase 2</a><a href="#q3">Phase 3</a>
+    <a href="#q4">Phase 4</a><a href="#q5">Phase 5</a><a href="#q6">Phase 6</a>
+    <a href="#cwna">CWNA-108 Mock</a>
+  </nav>
+</header>
+<main>
+
+  <div class="scoring">
+    <strong>How to use this page.</strong> Each phase quiz has 8&ndash;10 questions. Take it on paper or in a notebook first &mdash; expand the answer only after writing your own. Pass threshold: <strong>≥70% on first attempt</strong> with no hints. If you fall short, the answer block tells you which day to revisit. The CWNA-108 mock at the bottom is 30 multiple-choice questions in exam format.
+  </div>
+
+  <div class="toc">
+    <a href="#q1"><strong>Phase 1 Quiz</strong>PHY &amp; RF &mdash; 10 Qs</a>
+    <a href="#q2"><strong>Phase 2 Quiz</strong>MAC &amp; Frames &mdash; 8 Qs</a>
+    <a href="#q3"><strong>Phase 3 Quiz</strong>Security &mdash; 8 Qs</a>
+    <a href="#q4"><strong>Phase 4 Quiz</strong>QoS &amp; Roaming &mdash; 7 Qs</a>
+    <a href="#q5"><strong>Phase 5 Quiz</strong>Capacity &mdash; 7 Qs</a>
+    <a href="#q6"><strong>Phase 6 Quiz</strong>Capstone &mdash; 6 Qs</a>
+    <a href="#cwna"><strong>CWNA-108 Mock</strong>30 multi-choice</a>
+  </div>
+
+  <!-- ============ PHASE 1 QUIZ ============ -->
+  <div class="quiz-header phase1" id="q1">
+    <p class="quiz-tag" style="color:#134e4a">Phase 1 &mdash; PHY &amp; RF Internals</p>
+    <h2>Quiz 1 &mdash; 10 questions, ~40 min</h2>
+    <p class="quiz-meta">Covers Days 1&ndash;8: OFDM, MCS, channel widths, DFS, 6 GHz PSC, MU-MIMO/OFDMA, TxBF, Wi-Fi 7 MLO.</p>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q1 &middot; Calculation</p>
+    <div class="qbody">802.11ac uses 312.5 kHz subcarrier spacing with a 3.2 μs symbol time (CP 0.8 μs &rarr; total 4 μs). 802.11ax uses 78.125 kHz spacing. What is the resulting symbol time (data + CP) for 11ax? Show the relationship.</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Symbol time is the reciprocal of subcarrier spacing for the data portion: 1/78.125 kHz = 12.8 μs data + 0.8 μs CP = <strong>13.6 μs</strong> total (or 16 μs with the long 3.2 μs CP option). 4× longer symbol = 4× narrower subcarrier. Trade-off: bigger CP budget tolerates higher multipath delay spread; downside is more sensitivity to Doppler / mobility.
+      <br><em>Day 1. If wrong: re-read 80211-2024.pdf §17 subcarrier table.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q2 &middot; SNR Floor</p>
+    <div class="qbody">Match each MCS to its minimum required SNR (single stream, 20 MHz). MCS 0 (BPSK 1/2), MCS 4 (16-QAM 3/4), MCS 7 (64-QAM 5/6), MCS 9 (256-QAM 5/6), MCS 11 (1024-QAM 5/6).
+      <ul><li>Choices: 2 dB · 18 dB · 25 dB · 30 dB · 35 dB</li></ul>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>MCS 0 → 2 dB · MCS 4 → 18 dB · MCS 7 → 25 dB · MCS 9 → 30 dB · MCS 11 → 35 dB</strong>. Each constellation density doubling (BPSK→QPSK→16→64→256→1024) costs roughly +5 to +7 dB at the same coding rate.
+      <br><em>Day 2. If wrong: re-read 802.11ac VHT MCS-SNR-RSSI.pdf.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q3 &middot; Channel Width Scenario</p>
+    <div class="qbody">Neighbor BSS is on 80 MHz with primary channel 36. You configure your AP on 80 MHz with primary 40. A client in your BSS wants to send a 1500-byte data frame. What does 802.11ac dynamic bandwidth selection do, and which AP backs off?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      The two 80 MHz blocks overlap fully (both use channels 36/40/44/48). The AP that loses the EDCA backoff defers; whoever wins transmits at <strong>whatever width is clear at the moment</strong>. With dynamic bandwidth, the client's RTS/CTS announces full 80 MHz, but if CTS comes back announcing only 40 MHz clear, the DATA is sent at 40 MHz. Neither AP "backs off permanently" &mdash; they share airtime via co-channel contention. <em>This is exactly the "Fallacy of Channel Overlap" — co-channel is cooperative, adjacent-channel is destructive.</em>
+      <br><em>Day 3 + Phase 5 Day 4 preview. If wrong: re-read The Fallacy of Channel Overlap.pdf.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q4 &middot; DFS Cascade</p>
+    <div class="qbody">Your AP is on 80 MHz centered at channel 58 (uses channels 52/56/60/64, all DFS). A radar pulse is detected on the secondary channel 56. What happens to the primary, and how long until you can return?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Detecting radar on the secondary forces the <strong>entire 80 MHz block off-channel</strong>, not just the secondary &mdash; the standard treats DFS detection as per-AP, not per-subchannel. AP issues a Channel Switch Announcement (CSA) and moves to a non-DFS channel (e.g., U-NII-1 ch 36) or another DFS channel after a 60-second Channel Availability Check. <strong>30-minute non-occupancy period</strong> for the channel that had the radar hit (FCC).
+      <br><em>Day 4. If wrong: re-read FCC DFS Measurement.pdf.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q5 &middot; 6 GHz PSC</p>
+    <div class="qbody">Why does placing a 6 GHz AP on a non-PSC channel cost you connection time even though the AP transmits normal beacons? What recovery mechanism exists?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      In 6 GHz there are 59 channels (20 MHz). Scanning all of them is expensive, so 802.11 defines <strong>Preferred Scanning Channels (PSCs)</strong> — every 4th 20 MHz channel. Many clients (including iPhone) <strong>only scan PSCs by default</strong>. On a non-PSC channel, the client never finds you via passive scanning. Recovery: <strong>Reduced Neighbor Report (RNR)</strong> IE in 5 GHz (or another PSC) beacons points clients at the off-PSC channel; <strong>FILS Discovery / Unsolicited Probe Response (UPR)</strong> shorten the wait.
+      <br><em>Day 5. If wrong: re-read Apple 6E document set.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q6 &middot; MU-MIMO vs OFDMA Scenario</p>
+    <div class="qbody">A meeting room has 30 phones, each pushing 100 kbps voice (small RTP frames every 20 ms). MU-MIMO or OFDMA &mdash; which scheduler wins, and what feature of the workload determines the answer?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>OFDMA wins.</strong> Voice = small frames, many clients, low bandwidth per client. OFDMA can pack multiple clients into a single PPDU by assigning each a small Resource Unit (e.g., 26-tone RU). MU-MIMO requires spatial separation (large channel matrix sounding overhead) and pays off only when each grouped client wants a large payload. <strong>Frame size and client count favor OFDMA; payload size favors MU-MIMO.</strong>
+      <br><em>Day 6. If wrong: re-read WiFi-6-For-Dummies — Extreme.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q7 &middot; Beamforming Gain</p>
+    <div class="qbody">An iPhone has 2 spatial streams; AP3000 has 4 antennas. Does the iPhone benefit from beamforming using all 4 antennas? Why or why not?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Yes.</strong> The number of spatial streams (NSS) is limited by min(AP antennas, client antennas) = 2. But beamforming uses <em>all</em> AP antennas to constructively shape each of the 2 streams. The extra 2 AP antennas provide <strong>antenna aperture gain (TxBF) of ~3–6 dB</strong> on each stream by steering energy toward the client. NSS is one bound; SNR/gain is independent.
+      <br><em>Day 7. If wrong: re-read Aruba VHD Theory PDF.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q8 &middot; Wi-Fi 7 MLO Mode Selection</p>
+    <div class="qbody">When does an MLO STR link fall back to EMLSR, and what is the airtime cost of that fallback compared to true STR?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      MLO STR requires sufficient <strong>frequency separation</strong> between the two links to avoid self-interference (TX on one link doesn't blind RX on the other). If links are too close (e.g., both in 5 GHz), STR is impossible and the radio falls back to <strong>EMLSR — only one link active at a time</strong>, with fast switching. Throughput drops because you lose the parallel-link gain; latency stays low because switching is &lt;100 μs. <strong>STR gives throughput AND latency; EMLSR gives latency only.</strong>
+      <br><em>Day 8. If wrong: re-read 802.11be-2024.pdf §35.3.6.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q9 &middot; Drawing</p>
+    <div class="qbody">Without notes, draw the relationship between: subcarrier spacing, symbol time, max bandwidth per subcarrier, cyclic prefix overhead. Show what 4× scaling (11ac→11ax) does to each.</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Subcarrier spacing &times; 1/4 → symbol time &times; 4 (data portion). CP scales: 11ac fixed 0.8 μs (20% overhead at 4 μs symbol); 11ax CP options 0.8/1.6/3.2 μs (6&ndash;20% overhead at 13.6 μs symbol). Result: <strong>longer symbol = lower CP overhead = better in multipath</strong>, but worse Doppler tolerance for moving clients.
+      <br><em>Day 1. If wrong: redo Day 1 lab.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q10 &middot; Synthesis</p>
+    <div class="qbody">Your AP3000 reports negotiating MCS 4 with a 2 SS client at −68 dBm RSSI. The client is doing voice. Is anything suspicious about this link? What would you check first?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      −68 dBm should support MCS 7+ (needs ~25 dB SNR; if noise floor is −95 dBm then SNR ≈ 27 dB &mdash; comfortable for MCS 7). Negotiating only MCS 4 suggests high retry rate or interference. <strong>Check first: retry % via <code>show wifi stats</code>, and noise floor — actual noise may be much higher than −95 dBm (e.g., a nearby microwave or co-channel BSS).</strong> Voice on MCS 4 isn't fatal but wastes airtime &mdash; the AP rate-adapted down for a reason.
+      <br><em>Day 2 + Day 1. If wrong: redo Day 2 walk test.</em>
+    </div></details>
+  </div>
+
+  <!-- ============ PHASE 2 QUIZ ============ -->
+  <div class="quiz-header phase2" id="q2">
+    <p class="quiz-tag" style="color:#7c2d12">Phase 2 &mdash; MAC &amp; Frame Exchange</p>
+    <h2>Quiz 2 &mdash; 8 questions, ~30 min</h2>
+    <p class="quiz-meta">Covers Days 1&ndash;6: EDCA, NAV, A-MPDU, TWT, power save, multicast.</p>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q1 &middot; EDCA Tie-Break</p>
+    <div class="qbody">AC_VO (CWmin=3, AIFSN=2) and AC_VI (CWmin=7, AIFSN=2) both expire backoff at the same slot. Which transmits first, and what makes it deterministic?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>AC_VO wins by design.</strong> EDCA tie-breaks within the same client are <em>local</em> — the higher-priority AC always wins the internal collision. AC_VO has a smaller CWmin (3 vs 7) so on retry/backoff it gets a smaller random window, statistically winning sooner. The TXOP limit for AC_VO is also longer (~1.5 ms vs ~3 ms for AC_VI in some profiles — varies by vendor).
+      <br><em>Day 1. If wrong: re-read CWNP 802-11_arbitration.pdf.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q2 &middot; BSS Color OBSS_PD Decision</p>
+    <div class="qbody">Your AP's BSS Color = 5. You hear a frame from BSS Color 7 at −74 dBm. OBSS_PD threshold = −72 dBm. Do you defer or transmit? Which field carries the threshold?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>You transmit (do NOT defer).</strong> OBSS_PD says: if the heard frame is from another BSS (different color) AND its RSSI is <em>below</em> the threshold, you may ignore it for CCA purposes. −74 dBm &lt; −72 dBm → below threshold → ignore. If from your own BSS (same color), you always defer regardless of threshold. Threshold field is in the <strong>Spatial Reuse Parameter Set IE</strong> in HE Operation; raised threshold = more aggressive reuse but more collisions risk.
+      <br><em>Day 2. If wrong: re-read 802.11be-2024.pdf BSS Color section.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q3 &middot; Aggregation Choice</p>
+    <div class="qbody">In a lossy RF environment (high retry rate), is A-MPDU or A-MSDU better, and why does the encryption order matter?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>A-MPDU is better in lossy RF.</strong> A-MPDU aggregates after MAC encryption — each MPDU subframe has its own FCS/encryption, so a single subframe can be retransmitted via BlockAck bitmap. A-MSDU aggregates before encryption into a single MPDU — if any byte is lost, the entire MSDU group must be retransmitted. Modern stacks use both (A-MSDU inside A-MPDU) which gives header efficiency + per-subframe retry granularity.
+      <br><em>Day 3. If wrong: re-read 80211-2024.pdf §10.3.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q4 &middot; TWT Calculation</p>
+    <div class="qbody">A printer negotiates individual TWT with sleep interval 60 s, wake duration 100 ms. Per hour, what fraction of airtime is the printer awake, and how does the AP signal that the negotiated wake period is occurring?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      60 wake events/hour × 100 ms = 6000 ms = <strong>6 seconds awake per hour = ~0.17% of airtime</strong>. The AP signals the printer's wake using a <strong>Trigger frame</strong> at the negotiated time, or the printer wakes itself and probes the AP. Wake/sleep state is in the TWT element exchanged at negotiation; AP doesn't broadcast individual TWT to others (broadcast TWT would).
+      <br><em>Day 4. If wrong: re-read Apple iOS TWT PDF.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q5 &middot; TIM/DTIM Power Save</p>
+    <div class="qbody">A Ring camera is at DTIM 3 (beacon interval 100 TU). Expected wake every 300 TU (~307 ms). Observed wake spike of 200 ms in capture. What is happening at the TIM bitmap?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      DTIM 3 means every 3rd beacon includes the broadcast/multicast queue indication. The camera wakes briefly to read each beacon (~5 ms), and on a DTIM beacon stays awake to <strong>receive broadcast/multicast frames</strong>. A 200 ms wake suggests <strong>large multicast burst</strong> at the DTIM beacon — typically mDNS, ARP, IGMP, or Apple Bonjour traffic queued for delivery. Bitmap Control "Group buffered" bit will be set when there's buffered multicast.
+      <br><em>Day 5. If wrong: re-read WLAN Pi power save guide.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q6 &middot; Multicast Path</p>
+    <div class="qbody">Why does enabling IGMP snooping on SW1 NOT reduce Wi-Fi airtime by default? Where does multicast-to-unicast conversion have to happen?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      IGMP snooping prevents multicast from <strong>flooding switch ports</strong> that have no IGMP join — works at L2 on the wired side. But once multicast reaches the AP's wired port, it's sent over the air as a <strong>broadcast at the lowest mandatory rate</strong> (typically 6 Mbps) — costly. To save Wi-Fi airtime, the <strong>AP must do multicast-to-unicast conversion</strong> (a vendor feature, e.g., "MC2UC" or "Dynamic Multicast Optimization"), converting one multicast frame into N unicast frames at MCS-negotiated rates per client.
+      <br><em>Day 6. If wrong: re-read IPv4_Multicast.pdf.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q7 &middot; Frame Decode</p>
+    <div class="qbody">In a PCAP, you see: RTS → CTS → DATA(A-MPDU 32 subframes) → BlockAck. The Duration/ID in the RTS is 800 μs. What does that number represent?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Duration/ID in RTS reserves the channel via NAV. 800 μs = expected time for CTS + DATA + BA + 3× SIFS. Other STAs hearing the RTS set their NAV to 800 μs and defer. If they hear the CTS instead, they update NAV from CTS (which has a shorter remaining-duration value covering DATA + BA + 2× SIFS).
+      <br><em>Day 2 + Day 3. If wrong: redo Day 3 BlockAck capture.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q8 &middot; Power Save vs TWT</p>
+    <div class="qbody">Compare U-APSD and TWT for a VoIP handset. Which gives lower battery drain, and why is TWT not always usable?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>TWT gives lower drain</strong> — the client and AP negotiate fixed wake/sleep schedules, so the radio is off for known intervals. U-APSD wakes the client opportunistically when downstream traffic arrives (via trigger frame) — drain depends on traffic pattern. <strong>TWT requires 11ax + client + AP support + a negotiation that fits the traffic pattern.</strong> For pure VoIP with predictable 20 ms inter-packet intervals, TWT is great. For sporadic traffic, U-APSD is more flexible.
+      <br><em>Day 4 + Day 5. If wrong: re-read both Apple PS + TWT PDFs.</em>
+    </div></details>
+  </div>
+
+  <!-- ============ PHASE 3 QUIZ ============ -->
+  <div class="quiz-header phase3" id="q3">
+    <p class="quiz-tag" style="color:#9d174d">Phase 3 &mdash; Security Beyond the Handshake</p>
+    <h2>Quiz 3 &mdash; 8 questions, ~35 min</h2>
+    <p class="quiz-meta">Covers Days 1&ndash;6: FT/OKC, SAE H2E, MFP/BIP, OWE-T, EAP-TLS, BTM roaming.</p>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q1 &middot; FT Key Hierarchy</p>
+    <div class="qbody">In an 802.11r deployment with a Mobility Domain of 3 APs (R0KH = AP1), name what key material exists at which AP after a client first authenticates at AP1, and after the client roams to AP2 using FT-over-DS.</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      After initial auth at AP1: <strong>AP1 holds PMK-R0 + PMK-R1 (for AP1) + PTK</strong>. AP2/AP3 hold nothing.<br>
+      After FT-over-DS roam to AP2: AP1 (as R0KH) derives PMK-R1 for AP2 and pushes it via the DS. Now <strong>AP1 still holds PMK-R0; AP2 holds PMK-R1; AP2 derives PTK from PMK-R1 + nonces in the FT 4-msg exchange</strong>. PMK-R0 is anchored at one AP; PMK-R1 is per-AP and derived on demand.
+      <br><em>Day 1. If wrong: re-read 80211-2024.pdf §13.4 (FT key hierarchy).</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q2 &middot; SAE H2P vs H2E</p>
+    <div class="qbody">What specifically did SAE Hash-to-Element (H2E) change vs Hunting-and-Pecking (H2P), and which IE advertises support?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      H2P used a <strong>loop to find a valid element on the curve</strong> — the number of iterations leaked timing information about the password (side-channel). H2E precomputes a <strong>Password Token (PT)</strong> once at provisioning, deterministically mapped to a curve element — no loop, no timing leak. Support is advertised in the <strong>RSN Extended Capabilities</strong> IE: SAE H2E Required bit. A client AND AP must both advertise H2E to use it; otherwise they fall back to H2P (or refuse, depending on policy).
+      <br><em>Day 2. If wrong: re-read 80211-2024.pdf §12.4.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q3 &middot; MFP Deauth Scenario</p>
+    <div class="qbody">MFP "Required" mode is enabled. A rogue sends a spoofed unprotected Deauth to the client. The client's response triggers a 2-message exchange with the legitimate AP. What's that exchange?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>SA Query Request → SA Query Response.</strong> Client (or AP) receives an unprotected Deauth; instead of disconnecting, the MFP-aware peer issues an SA Query Request to verify the deauth is real. The legitimate AP (which holds the IGTK/PTK) responds with SA Query Response. If response arrives, the original deauth was spoofed — client stays associated. If no response within the timeout (~1 s), client treats the deauth as legitimate. <strong>This makes deauth flood attacks ineffective when MFP is Required.</strong>
+      <br><em>Day 3. If wrong: re-read 80211-2024.pdf §12.6.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q4 &middot; OWE Transition IE</p>
+    <div class="qbody">In OWE Transition Mode there are two BSSIDs. Which IE in the open BSSID's beacon points at the OWE BSSID, and how does an iPhone decide which to join?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      The <strong>OWE Transition Mode IE</strong> in the open BSSID's beacon carries the OWE BSSID's MAC + SSID. The iPhone reads this and <strong>prefers the OWE BSSID</strong> if it supports OWE. If the client doesn't support OWE, it ignores the IE and joins the open BSSID (legacy compatibility). Each BSSID has a different beacon — the open one is "advertised", the OWE one is "hidden" (not in probe responses to all clients).
+      <br><em>Day 4. If wrong: re-read Apple Open Wi-Fi + Privacy PDFs.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q5 &middot; EAP-TLS Cert Failure</p>
+    <div class="qbody">Your RADIUS server's cert is signed by an intermediate CA, but the AP's RADIUS profile doesn't have the intermediate CA installed. EAP-TLS fails. At which step does it fail?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Fails at the <strong>Server Hello + Certificate</strong> step of the TLS handshake. The server presents its cert chain to the client (via the AP). The client validates the chain back to its trusted root — if the intermediate CA isn't sent (server misconfig) or isn't in the client's trust store, validation fails. Client sends <strong>TLS Alert: bad_certificate or unknown_ca</strong>, EAP-TLS aborts, RADIUS returns Access-Reject. <em>Common fix: install the intermediate on the server, OR install the intermediate as trusted on every client (worse).</em>
+      <br><em>Day 5. If wrong: re-read Capture 08 - RADIUS over Wireless.pcapng.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q6 &middot; MAC Randomization</p>
+    <div class="qbody">A MacBook uses per-SSID random MAC. Your RADIUS policy ties authorization to MAC. What breaks first — authentication, accounting, or authorization — and which RADIUS attribute exposes the conflict?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Authorization breaks first</strong> (or accounting if it's MAC-based). Authentication (EAP-TLS) works because cert identity is independent of MAC. But the Access-Request carries the random MAC in <strong>Calling-Station-Id (Attr 31)</strong>. If your policy lookup uses Calling-Station-Id to find a user, it fails — the user appears "new" each time. Fix: switch authorization to use the certificate's Subject CN or another stable identifier; don't use MAC for identity in any deployment that has Apple/Microsoft clients with random MAC enabled.
+      <br><em>Day 5. If wrong: re-read Apple MAC Randomization PDF.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q7 &middot; Apple BTM Behavior</p>
+    <div class="qbody">Controller sends BTM Request with Disassoc Imminent = 1 and a candidate AP list including AP2 (at −62 dBm). iPhone is currently at AP1 (−68 dBm). What condition must hold for iPhone to accept the BTM and roam?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      iPhone evaluates BTM candidates against its <strong>own RSSI hysteresis</strong>. Apple requires the candidate AP to be <strong>better by ~8 dB</strong> (varies by iOS version) than the current AP. −62 vs −68 = 6 dB delta — close to threshold but may not exceed it. If iPhone refuses, it sends BTM Response with Status Code 7 (no suitable candidate). If accept, Status Code 0 + chosen BSSID. <em>Disassoc Imminent alone does NOT force a roam — Apple respects its own algorithm.</em>
+      <br><em>Day 6. If wrong: re-read Apple Wi-Fi roaming PDF.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q8 &middot; OKC vs FT Latency</p>
+    <div class="qbody">Why does OKC roaming take ~40–60 ms while FT takes ~15–20 ms in the same RF environment?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      OKC eliminates the full 802.1X EAP exchange (saves ~50–100 ms), but still requires a <strong>full 4-message 4-way handshake</strong> after reassociation. FT collapses the 4-way handshake into <strong>2 messages embedded in the FT Auth/Reassoc exchange</strong> — no separate EAPOL exchange after assoc. That saves the 2× round-trip of the post-assoc EAPOL exchange (~25–40 ms). <strong>FT = no post-assoc EAPOL. OKC = no EAP, but yes EAPOL.</strong>
+      <br><em>Day 1 + Phase 4 Day 3 preview.</em>
+    </div></details>
+  </div>
+
+  <!-- ============ PHASE 4 QUIZ ============ -->
+  <div class="quiz-header phase4" id="q4">
+    <p class="quiz-tag" style="color:#581c87">Phase 4 &mdash; QoS, Roaming &amp; Convergence</p>
+    <h2>Quiz 4 &mdash; 7 questions, ~30 min</h2>
+    <p class="quiz-meta">Covers Days 1&ndash;5: DSCP trust, voice budget, sticky clients, band steering, MBO.</p>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q1 &middot; DSCP=0 Collapse</p>
+    <div class="qbody">Your FaceTime video traffic arrives at the AP with DSCP=0 (modem stripped marking). In-cell voice quality is good. What's assigning the WMM UP?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      The <strong>client OS (iOS) marks WMM UP at the air interface</strong> based on application identity (RTP port, app socket priority), independent of DSCP. iOS knows FaceTime audio is RTP → marks UP 6 → AC_VO. The AP receives the air frame already in AC_VO and treats it correctly. <strong>On downlink, the AP would need DSCP to map to AC — DSCP=0 collapses everything to AC_BE.</strong> Wireshark filter to verify: <code>wlan.qos.priority</code> in the air frame.
+      <br><em>Day 1. If wrong: re-read prior May 8 QoS EOD.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q2 &middot; AP3000 Uplink Trust</p>
+    <div class="qbody">AP3000 trusts client WMM UP by default. What prevents a malicious client from marking all traffic AC_VO? Where is the enforcement?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Nothing in the air interface prevents it</strong> — clients self-assign UP. Enforcement happens at the <strong>AP egress to the wire</strong>: the AP can be configured to <strong>remark or rate-limit</strong> by SSID, by user role, or by traffic type. The trust boundary is moved from "trust the air" to "trust this SSID up to N kbps of AC_VO." Without remarking, a malicious client can starve other ACs by marking everything AC_VO.
+      <br><em>Day 2. If wrong: re-read reference_ap3000_command_themes.md QoS lens.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q3 &middot; Voice Roaming Budget Calculation</p>
+    <div class="qbody">G.114 budget for total mouth-to-ear latency is 150 ms one-way. Network contributes 70 ms (transit). Codec adds 30 ms. What's the roaming budget &mdash; and at MCS 4 (24 Mbps PHY), how many 60-byte voice frames can transmit in that budget?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Roaming budget = 150 − 70 − 30 = <strong>50 ms</strong>. ToA per 60-byte voice frame at MCS 4 (24 Mbps): ~50 μs + overhead (preamble + SIFS + ACK + DIFS + backoff) ≈ <strong>500 μs total medium time</strong>. 50 ms / 500 μs = <strong>100 voice frames lost</strong> per roam event if the roam is &gt;50 ms. This is why 11r is essential for voice.
+      <br><em>Day 3. If wrong: re-read Aruba VHD Planning PDF.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q4 &middot; Sticky iPhone</p>
+    <div class="qbody">iPhone at −78 dBm on AP1. AP2 is at −63 dBm. Controller sends BTM disassoc-imminent. iPhone refuses. Why?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      AP2 is 15 dB better — clearly meets Apple's hysteresis. iPhone refusing suggests either: <strong>(a) AP2 is not advertising compatible auth/encryption</strong> (different security profile, different SSID, different VLAN), <strong>(b) AP2 is on a band the iPhone has signal quality concerns about</strong> (e.g., 2.4 GHz only), or <strong>(c) iPhone is in a state where it's pinned to AP1 by Apple's "Wi-Fi Assist" logic</strong>. Most common: SSID/security mismatch between APs. Check the BTM candidate list IE to verify what's offered.
+      <br><em>Day 4. If wrong: re-read Apple Enterprise Best Practices PDF.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q5 &middot; Band Steering Breakage</p>
+    <div class="qbody">Probe-suppression-based band steering on 2.4 GHz: why does this break iPhone scanning, and what's the modern alternative?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      iPhone uses active probing on 2.4 GHz and reads probe responses to build its scan database. If the AP suppresses probe responses, <strong>iPhone thinks the SSID doesn't exist on 2.4 GHz</strong> — fine, that's the intent. But iPhone may then fail to find any AP if 5 GHz signal is weak. Worse: it can repeatedly probe with no response, increasing battery drain. <strong>Modern alternative: 11v MBO Assoc Deny with Reason "Steering Required" (Status Code 30)</strong>. The AP <em>accepts</em> the probe but rejects the association with a reason code, including a candidate list pointing at 5 GHz. iPhone respects this gracefully.
+      <br><em>Day 5. If wrong: re-read Apple Enterprise PDF + 80211 MBO element.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q6 &middot; DSCP↔UP Mapping Exception</p>
+    <div class="qbody">DSCP 46 (EF) → UP 6 (AC_VO) is standard. What DSCP value maps to AC_VI (UP 5) and why does this asymmetry exist?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>DSCP 34 (AF41) → UP 5 (AC_VI)</strong>. AF41 is the standard for interactive video; the 802.11e mapping table groups DSCP per-traffic-class. Note: the recent <strong>RFC 8325</strong> proposed a cleaner mapping where DSCP CS6/CS7 (network control) → UP 7 (AC_VO), and DSCP EF → UP 6 — this matters when integrating with networks that follow newer guidance. <em>Always test the actual mapping on your AP because vendors may override.</em>
+      <br><em>Day 1.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q7 &middot; Roaming Strategy Design</p>
+    <div class="qbody">Design a roaming strategy for a hospital with iOS/Android phones doing nurse-call voice. Stating Apple's algorithm constraints, what 3 protocols do you enable, and what hysteresis do you target?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Enable: 802.11r (FT), 802.11k (Neighbor Report), 802.11v (BTM).</strong> Hysteresis target: 6–8 dB (the AP-to-AP RSSI delta that triggers Apple-side roam evaluation). Apple's algorithm wants ALL of: (a) 11r — minimize roam latency, (b) 11k — give client a candidate list so it doesn't scan all channels, (c) 11v — let controller suggest steering when load-balancing needed. Do NOT use deauth-based forced roaming. Set min-RSSI threshold ~−72 dBm so weak clients are deauth'd only as last resort.
+      <br><em>Day 3 + Day 4 + Phase 3 Day 6 synthesis.</em>
+    </div></details>
+  </div>
+
+  <!-- ============ PHASE 5 QUIZ ============ -->
+  <div class="quiz-header phase5" id="q5">
+    <p class="quiz-tag" style="color:#1d4ed8">Phase 5 &mdash; Capacity Planning &amp; HDD</p>
+    <h2>Quiz 5 &mdash; 7 questions, ~30 min</h2>
+    <p class="quiz-meta">Covers Days 1&ndash;5: airtime math, RSSI tiers, SSID overhead, co-channel, Wi-Fi 7 ceiling.</p>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q1 &middot; Airtime Calculation</p>
+    <div class="qbody">30 clients × 2 Mbps each × MCS 5 (52 Mbps PHY on 40 MHz, 1 SS, 11ax). Ignoring overhead, what's the projected medium time utilization?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Total demand = 30 × 2 = <strong>60 Mbps</strong>. PHY rate = 52 Mbps per client. But airtime isn't shared in parallel — it's serialized. Each client at MCS 5 uses <strong>(2 Mbps / 52 Mbps) = ~3.8% of medium time</strong> if alone. 30 clients × 3.8% = <strong>~115% total → over-subscribed</strong>. With overhead (preamble, IFS, ACK), real ceiling is reached at ~75% — so this load is unfeasible without higher MCS, OFDMA multiplexing, or splitting across more APs.
+      <br><em>Day 1. If wrong: re-read Rev Wi-Fi Capacity Planner pp.1–20.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q2 &middot; RSSI Asymmetry</p>
+    <div class="qbody">Design RSSI is −67 dBm for voice. Why isn't this a symmetric metric (uplink vs downlink), and which direction is usually the constraint when AP has 4 antennas and phone has 2?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Uplink (client → AP) is the constraint.</strong> The AP has 4 antennas with combining gain (~6 dB MIMO gain) and a low-noise receiver. The phone has 2 antennas, less aperture, and a higher TX power limit but less effective antenna gain. So a measured client RSSI of −67 dBm at the AP often corresponds to a real client-side downlink RSSI of −72 dBm or worse. <strong>You design uplink to the −67 dBm target because the downlink will follow.</strong>
+      <br><em>Day 2. If wrong: re-read Aruba VHD Planning PDF.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q3 &middot; SSID Overhead</p>
+    <div class="qbody">4 SSIDs, 100 TU beacon interval, beacons at 6 Mbps mandatory rate, beacon frame ~250 bytes. What's the beacon-only airtime % at zero clients, and why does it scale linearly with SSID count?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      ToA per beacon at 6 Mbps: 250 B × 8 / 6e6 = ~333 μs + overhead ≈ <strong>500 μs per beacon</strong>. 4 SSIDs × 10 beacons/sec each (100 TU = 102.4 ms = ~9.77 beacons/sec) = 40 beacons/sec × 500 μs = <strong>~2% airtime (per band, per radio)</strong>. Scales linearly because each SSID = independent beacon stream. Multiply by 2 bands = 4% from beacons alone. <strong>Reduce by: lowering SSID count, raising mandatory rate (12 or 24 Mbps), increasing beacon interval to 200 TU.</strong>
+      <br><em>Day 3. If wrong: re-read Wi-Fi SSID Overhead Calculator.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q4 &middot; Co-Channel vs Adjacent</p>
+    <div class="qbody">Two APs 5m apart. Configuration A: both on channel 36 (co-channel). Configuration B: AP1 on 36, AP2 on 40 (adjacent-channel). Which performs better, and why?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Configuration A (co-channel) is better at 5m</strong>. Same channel → both APs respect CCA — they take turns. Throughput per AP halves but both APs and all clients can decode. Different (overlapping) channels → MAC-level collisions: APs can't decode each other's transmissions because they're on a different center frequency, but RF energy still interferes — receivers fail decode → high retry rate → low effective throughput. <strong>At very close distance, co-channel cooperative > adjacent-channel destructive.</strong> The "Fallacy of Channel Overlap" inverts this for distant APs (then adjacent is fine).
+      <br><em>Day 4. If wrong: re-read The Fallacy of Channel Overlap.pdf.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q5 &middot; Wi-Fi 7 Capacity Ceiling</p>
+    <div class="qbody">30 clients in a meeting room, all iPhone 15 (2SS, MLO STR). Each demands 5 Mbps. Using 320 MHz in 6 GHz with MLO STR over 5 GHz 80 MHz secondary link, what's the realistic per-client throughput ceiling? Does MLO STR help here?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Aggregate demand = 30 × 5 = <strong>150 Mbps</strong>. 320 MHz link at MCS 11 (1024-QAM, 2SS) PHY rate ≈ 5.8 Gbps theoretical — wildly more than needed. MLO STR adds the 5 GHz 80 MHz link in parallel (~1.2 Gbps PHY). <strong>Capacity is not the constraint here — channel contention is.</strong> 30 clients all on the same BSS still serialize via EDCA — single-radio airtime ceiling ~75% means 4.4 Gbps effective. <em>For this load, MLO doesn't help throughput; it helps latency (smaller jitter) and adds redundancy.</em>
+      <br><em>Day 5. If wrong: re-read 802.11be-2024.pdf §35 + Annex Z.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q6 &middot; Mandatory Rate Design</p>
+    <div class="qbody">Your design RSSI is −67 dBm and you're seeing 8% airtime from broadcast/multicast/beacons. What change cuts this overhead most effectively?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Raise the minimum mandatory data rate (and broadcast rate) to 24 Mbps</strong>. Broadcasts and beacons go at the lowest mandatory rate. Going from 6 → 24 Mbps quarters the ToA per broadcast → reduces broadcast/beacon airtime by ~75%. Cost: clients below MCS 2 (about −82 dBm) are disconnected — usually acceptable because you've designed for −67 dBm anyway.
+      <br><em>Day 3 + Day 1. If wrong: re-read SSID Overhead Calculator + Capacity Planner.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q7 &middot; Design Synthesis</p>
+    <div class="qbody">For the KhKLab room (10m × 6m, 1 AP3000, mixed iPhone/MacBook), state in one line each: design RSSI, mandatory rate, max SSIDs, max simultaneous voice clients on 5 GHz 80 MHz at MCS 7.</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Design RSSI:</strong> −67 dBm (voice-grade). <strong>Mandatory rate:</strong> 24 Mbps. <strong>Max SSIDs:</strong> 3 (KB_School, KB_Guest, Mgmt). <strong>Max voice clients:</strong> ~15–20 on 5 GHz 80 MHz MCS 7. Voice frame ≈ 200 μs ToA at MCS 7; 50 frames/sec/client × 200 μs = 10,000 μs/sec = 1% airtime per client. 20 clients = 20%, leaving 80% for other traffic.
+      <br><em>Day 1 + 2 + 3 + 5. If wrong: redo the Phase 5 capacity design.</em>
+    </div></details>
+  </div>
+
+  <!-- ============ PHASE 6 QUIZ ============ -->
+  <div class="quiz-header phase6" id="q6">
+    <p class="quiz-tag" style="color:#065f46">Phase 6 &mdash; Field Troubleshooting Capstone</p>
+    <h2>Quiz 6 &mdash; 6 questions, ~25 min</h2>
+    <p class="quiz-meta">Covers Days 1&ndash;4: WLPC 2026 framework, 30-row causes, frame stats, incident report.</p>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q1 &middot; Framework Mapping</p>
+    <div class="qbody">For the May 7 DHCP incident: which of the 6 WLPC processes (MANAGE / INVESTIGATE / MEASURE / VALIDATE / ANALYZE / INTERROGATE) produced each evidence type below?
+      <ul>
+        <li>Customer reported "iPhone can't browse but is connected"</li>
+        <li>SW1 <code>show iparp</code> showed empty ARP cache for the client</li>
+        <li>Before/after PCAP of the same Guest LAA MAC confirming TK desync</li>
+        <li>Test scenario reproduces the issue 100% with en8 cable</li>
+      </ul>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      Customer report → <strong>MANAGE</strong> (scope, symptom).<br>
+      Empty ARP cache → <strong>MEASURE</strong> (data collection).<br>
+      Before/after PCAP comparison → <strong>INTERROGATE</strong> (frame-level proof).<br>
+      Reproducible 100% with en8 → <strong>VALIDATE</strong> (confirmed scope/trigger).<br>
+      Missing process so far: ANALYZE (root cause from evidence — happens between MEASURE and INTERROGATE).
+      <br><em>Day 1.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q2 &middot; 30-Row Triage</p>
+    <div class="qbody">Symptom: "DHCP NAK at client". List the 4 rows of the 30-row WIRELESS column you'd eliminate first, and the one-line check for each.</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Row: AP doesn't have IP/VLAN access to DHCP server</strong> — Check: SW1 <code>show vlan members port &lt;ap-port&gt;</code> includes client VLAN.<br>
+      <strong>Row: AP not in AP-Management VLAN correctly</strong> — Check: AP <code>show interface</code> shows mgmt IP matches expected subnet.<br>
+      <strong>Row: WPA2 key state desync (no encrypted DHCP traffic)</strong> — Check: <code>show wifi station &lt;mac&gt;</code> on AP shows WPA2 state = AUTHENTICATED + TK present.<br>
+      <strong>Row: 802.11 association OK but 4-way handshake failed</strong> — Check: AP1 capture filter <code>wlan.fc.type_subtype == 0x0008 and wlan.ra == &lt;client-mac&gt;</code> — look for EAPOL exchange completing.
+      <br><em>Day 2. If wrong: re-read WLPC Express 2026 PDF.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q3 &middot; Frame Stats</p>
+    <div class="qbody">One client shows 18% retry rate; cell-wide is 4%. What are the 3 most likely per-client causes, and which Wireshark filter confirms each fastest?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>(1) Client-specific RF problem</strong> (distance, obstruction, antenna): <code>wlan_radio.signal_dbm</code> + <code>wlan.fc.retry == 1</code> filtered to client MAC — check if retries cluster at low RSSI.<br>
+      <strong>(2) Non-Wi-Fi interference at the client position</strong> (Bluetooth, microwave): filter <code>wlan.fc.retry == 1</code> + IO Graph — look for retry bursts at specific times.<br>
+      <strong>(3) Client driver/firmware bug</strong> (sticky to dropped frames, wrong MCS): <code>wlan.fc.retry == 1 and wlan.he_mcs</code> — check if retries cluster at a specific MCS that other clients handle.
+      <br><em>Day 3. If wrong: re-read WLAN Pros Master Wireshark profile.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q4 &middot; Incident Report Skeleton</p>
+    <div class="qbody">Build the section skeleton (titles only, no content) for a WLPC-style incident report. 6 sections.</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>1. Problem Statement</strong> (one-line symptom + scope)<br>
+      <strong>2. Investigation Timeline</strong> (chronological MEASURE actions)<br>
+      <strong>3. Evidence Collected</strong> (data: PCAP filenames, command outputs, RSSI readings)<br>
+      <strong>4. Root Cause Analysis</strong> (ANALYZE — eliminated alternatives)<br>
+      <strong>5. Fix Applied</strong> (specific config change + commit/rollout)<br>
+      <strong>6. Validation &amp; Lessons</strong> (proof fix held + what changes process for next time)
+      <br><em>Day 4. Maps to WLPC 6 processes 1-to-1.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q5 &middot; Self-Audit</p>
+    <div class="qbody">WLANPros v5 "Top 20" checklist row: "Verify DTIM aligns with multicast traffic profile." Without notes, what's the test, and what's the pass criterion?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Test:</strong> Capture 60s of beacons; decode TIM IE; observe DTIM Count + Period; correlate beacon arrival with broadcast frame appearance (e.g., mDNS, ARP). <strong>Pass criterion:</strong> No multicast frames between DTIM beacons (they should buffer); broadcasts at DTIM interval; client wake duration tracks DTIM cadence. Fail signal: continuous broadcast = clients can't sleep effectively = battery drain.
+      <br><em>Phase 2 Day 5 + Phase 6 Day 4.</em>
+    </div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q6 &middot; Final Capstone</p>
+    <div class="qbody">In one sentence: what's the single most valuable lesson from the May 7 DHCP incident that should change your default troubleshooting workflow going forward?</div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body">
+      <strong>Capture before reboot.</strong> Reboot loses key state (TK, PMKSA) that may be the root cause. Always run a PCAP first, even if reboot is the obvious fix, because the next incident will look similar and the pcap is the only ground-truth for "was this WPA2 key-state desync, or DHCP server, or VLAN?"
+      <br><em>Day 4. This is in reference_dhcp_wifi_triage_runbook.md.</em>
+    </div></details>
+  </div>
+
+  <!-- ============ CWNA-108 MOCK ============ -->
+  <div class="quiz-header cwna" id="cwna">
+    <p class="quiz-tag" style="color:#1a1a1a">CWNA-108 Cumulative Mock</p>
+    <h2>CWNA-108 Mock &mdash; 30 multiple choice, ~50 min</h2>
+    <p class="quiz-meta">Real CWNA-108 exam: 60 questions, 90 min, 70% pass. This is a 30-question subset weighted toward topics this curriculum covers. Take all 30 in one sitting before peeking at any answer.</p>
+  </div>
+
+  <div class="scoring">
+    <strong>Exam format reminder.</strong> Single best answer (A/B/C/D). No partial credit. Mark uncertain questions; return to them last. Pass threshold here: <strong>21/30 (70%)</strong>.
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q1 &middot; RF Fundamentals</p>
+    <div class="qbody">What is the wavelength of a 5 GHz signal in free space?
+      <ol class="mc-options">
+        <li>0.6 cm</li><li>6 cm</li><li>12.5 cm</li><li>30 cm</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B (6 cm).</strong> λ = c/f = 3×10⁸ / 5×10⁹ = 0.06 m = 6 cm. For comparison: 2.4 GHz λ ≈ 12.5 cm.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q2 &middot; RF Math</p>
+    <div class="qbody">An AP transmits at +20 dBm. The antenna has +5 dBi gain. Cable loss is 2 dB. What is the EIRP?
+      <ol class="mc-options">
+        <li>17 dBm</li><li>23 dBm</li><li>25 dBm</li><li>27 dBm</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B (23 dBm).</strong> EIRP = TX power + antenna gain − cable loss = 20 + 5 − 2 = 23 dBm.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q3 &middot; 802.11 Standards</p>
+    <div class="qbody">Which 802.11 amendment first introduced MU-MIMO in downlink?
+      <ol class="mc-options">
+        <li>802.11n</li><li>802.11ac Wave 2</li><li>802.11ax</li><li>802.11be</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B (802.11ac Wave 2).</strong> DL MU-MIMO arrived in Wave 2 (2015–16). 802.11ax added UL MU-MIMO. 802.11be extends with 16-stream MU-MIMO.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q4 &middot; MAC Layer</p>
+    <div class="qbody">An RTS frame has Duration/ID field set to 800 μs. What does this represent?
+      <ol class="mc-options">
+        <li>Time the source will hold the channel for backoff</li>
+        <li>NAV value other stations should set to defer transmission</li>
+        <li>Time-to-live of the data frame</li>
+        <li>EDCA contention window in microseconds</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B.</strong> Duration/ID in RTS reserves the medium via NAV. Other STAs set NAV to 800 μs and defer.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q5 &middot; EDCA</p>
+    <div class="qbody">In WMM, which Access Category has the SHORTEST AIFSN?
+      <ol class="mc-options">
+        <li>AC_BK (Background)</li><li>AC_BE (Best Effort)</li><li>AC_VI (Video)</li><li>AC_VO (Voice)</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>D (AC_VO).</strong> AC_VO has AIFSN=2; AC_VI has AIFSN=2 in some profiles but CWmin is larger. Voice always wins arbitration.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q6 &middot; WLAN Architecture</p>
+    <div class="qbody">A cloud-managed WLAN typically operates in which architecture model?
+      <ol class="mc-options">
+        <li>Autonomous (standalone) APs</li>
+        <li>Centralized controller (split-MAC)</li>
+        <li>Cloud-managed with local data forwarding</li>
+        <li>Mesh network only</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C.</strong> Cloud-managed APs (XIQ, EP1, Meraki) typically use local data forwarding — only management plane goes to cloud. Data flows directly to wired network.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q7 &middot; Security</p>
+    <div class="qbody">In a WPA2-Personal network, the PMK is derived from:
+      <ol class="mc-options">
+        <li>PBKDF2(passphrase, SSID, 4096 iterations)</li>
+        <li>SAE Commit/Confirm exchange</li>
+        <li>SHA-256 of the passphrase only</li>
+        <li>Random number from the AP</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>A.</strong> PBKDF2 with the passphrase, SSID as salt, and 4096 iterations. SAE (option B) is WPA3, not WPA2.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q8 &middot; 4-Way Handshake</p>
+    <div class="qbody">Which message of the WPA2 4-way handshake delivers the GTK to the client?
+      <ol class="mc-options">
+        <li>Message 1 (AP→client, ANonce)</li>
+        <li>Message 2 (client→AP, SNonce)</li>
+        <li>Message 3 (AP→client, install PTK + GTK)</li>
+        <li>Message 4 (client→AP, ACK)</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C (Message 3).</strong> M3 from AP→client carries the GTK (encrypted with the new PTK) and the install signal.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q9 &middot; 802.1X</p>
+    <div class="qbody">In 802.1X with EAP-TLS, the AP acts as:
+      <ol class="mc-options">
+        <li>Supplicant</li><li>Authenticator</li><li>Authentication server</li><li>RADIUS server</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B (Authenticator).</strong> Supplicant = client; Authenticator = AP/switch; Authentication Server = RADIUS.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q10 &middot; FT (802.11r)</p>
+    <div class="qbody">802.11r Fast BSS Transition primarily reduces:
+      <ol class="mc-options">
+        <li>RF coverage holes</li>
+        <li>Roaming latency by collapsing the 4-way handshake</li>
+        <li>Beacon overhead</li>
+        <li>DHCP lease time</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B.</strong> FT collapses the post-association 4-way handshake into 2 messages within the FT exchange. Drops roaming latency from ~80–120 ms to ~15–20 ms.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q11 &middot; WPA3</p>
+    <div class="qbody">SAE (Simultaneous Authentication of Equals) replaces:
+      <ol class="mc-options">
+        <li>EAP-TLS</li><li>WPA2-Personal's PSK exchange</li><li>The 4-way handshake</li><li>PMKID caching</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B.</strong> SAE replaces the PSK authentication step. The 4-way handshake still occurs after SAE to derive PTK/GTK. SAE prevents offline dictionary attacks.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q12 &middot; MFP (802.11w)</p>
+    <div class="qbody">Management Frame Protection (MFP) protects which frame types?
+      <ol class="mc-options">
+        <li>All management frames</li>
+        <li>Robust management frames (Deauth, Disassoc, Action)</li>
+        <li>Only Beacons and Probe Responses</li>
+        <li>Only Authentication frames</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B.</strong> MFP protects "robust" management frames — primarily Deauth, Disassoc, and select Action frames. Beacons/Probes cannot be protected because pre-association clients can't decrypt.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q13 &middot; Site Survey</p>
+    <div class="qbody">During a passive site survey for high-density VoIP, what is the typical primary coverage RSSI target?
+      <ol class="mc-options">
+        <li>−85 dBm</li><li>−75 dBm</li><li>−67 dBm</li><li>−50 dBm</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C (−67 dBm).</strong> Voice = primary coverage tier. Data = ~−72 dBm. Edge = ~−75 dBm.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q14 &middot; Spectrum Analysis</p>
+    <div class="qbody">A spectrum analyzer shows a swept signal across the entire 2.4 GHz band every few seconds. Most likely source?
+      <ol class="mc-options">
+        <li>Bluetooth (frequency hopping)</li>
+        <li>Microwave oven (during cook cycle)</li>
+        <li>802.11n AP with channel bonding</li>
+        <li>Cordless phone (DECT)</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>A (Bluetooth).</strong> Bluetooth Classic hops 1600 times/sec across 79 1-MHz channels in 2.4 GHz — appears as fast-sweeping signal across the band.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q15 &middot; 5 GHz DFS</p>
+    <div class="qbody">After a radar detection event on a DFS channel, the FCC requires a non-occupancy period of at least:
+      <ol class="mc-options">
+        <li>60 seconds</li><li>5 minutes</li><li>30 minutes</li><li>24 hours</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C (30 minutes).</strong> FCC requires 30 min non-occupancy after a radar detection on a DFS channel.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q16 &middot; PoE</p>
+    <div class="qbody">A Wi-Fi 6E AP draws 30 W in heavy operation. Which PoE standard is required?
+      <ol class="mc-options">
+        <li>802.3af (PoE)</li><li>802.3at (PoE+)</li><li>802.3bt Type 3 (PoE++)</li><li>802.3bt Type 4 (UPoE)</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C (802.3bt Type 3, ~60W).</strong> PoE+ (802.3at) maxes at ~25.5W and is insufficient for many Wi-Fi 6/6E APs. AP3000 typically requires 802.3bt.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q17 &middot; Channel Width</p>
+    <div class="qbody">In 5 GHz U-NII-1 (channels 36–48), how many non-overlapping 80 MHz channels are available?
+      <ol class="mc-options">
+        <li>1</li><li>2</li><li>3</li><li>4</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>A (1).</strong> U-NII-1 = ch 36/40/44/48 = exactly one 80 MHz channel (36-48). Add U-NII-2A (52-64) for a 2nd 80 MHz.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q18 &middot; 802.11ax (HE)</p>
+    <div class="qbody">802.11ax introduces OFDMA. What does the smallest Resource Unit (RU) consist of?
+      <ol class="mc-options">
+        <li>14 subcarriers</li><li>26 subcarriers</li><li>52 subcarriers</li><li>106 subcarriers</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B (26 subcarriers).</strong> 26-tone RU is the smallest in 11ax. A 20 MHz channel = 9× 26-tone RUs or 4× 52-tone or 2× 106-tone or 1× 242-tone.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q19 &middot; BSS Color</p>
+    <div class="qbody">BSS Color is most useful for:
+      <ol class="mc-options">
+        <li>Beamforming optimization</li>
+        <li>Spatial reuse — ignoring frames from other BSSes below a threshold</li>
+        <li>QoS classification</li>
+        <li>Power-saving negotiation</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B.</strong> BSS Color lets a station distinguish own-BSS from neighbor-BSS frames quickly. With OBSS_PD, neighbor frames below a threshold can be ignored for CCA — enabling spatial reuse.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q20 &middot; TWT</p>
+    <div class="qbody">Target Wake Time (TWT) primarily benefits:
+      <ol class="mc-options">
+        <li>High-throughput backbone traffic</li>
+        <li>Battery-constrained IoT devices with predictable traffic</li>
+        <li>Voice latency reduction</li>
+        <li>Spectrum analyzer accuracy</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B.</strong> TWT lets devices negotiate fixed wake/sleep intervals. Best for IoT (cameras, sensors) where traffic is predictable.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q21 &middot; Power Save</p>
+    <div class="qbody">If DTIM Period = 3 and Beacon Interval = 100 TU, a power-saving client wakes for broadcast traffic every:
+      <ol class="mc-options">
+        <li>100 TU</li><li>200 TU</li><li>300 TU</li><li>3000 TU</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C (300 TU ≈ 307 ms).</strong> DTIM Period 3 × Beacon Interval 100 TU = 300 TU between DTIM beacons.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q22 &middot; Wireless Attack</p>
+    <div class="qbody">A "rogue AP" attack typically involves:
+      <ol class="mc-options">
+        <li>Eavesdropping on PMK exchange</li>
+        <li>Setting up an unauthorized AP with same SSID to capture credentials</li>
+        <li>Flooding APs with association requests</li>
+        <li>Sending malformed Beacon frames</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B.</strong> Rogue AP = unauthorized AP that mimics legitimate SSID to lure clients into associating, often for credential capture or MitM.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q23 &middot; Site Survey Tools</p>
+    <div class="qbody">An active site survey (vs passive) primarily differs in that it:
+      <ol class="mc-options">
+        <li>Uses spectrum analysis only</li>
+        <li>Associates with the network and measures live data rates</li>
+        <li>Records only beacon RSSI</li>
+        <li>Tests only DFS channels</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>B.</strong> Active survey associates with the AP and exchanges data; measures real throughput, retry rate, MCS. Passive only listens to beacons.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q24 &middot; Antenna</p>
+    <div class="qbody">A 90° sector antenna in a stadium most likely concentrates RF energy in:
+      <ol class="mc-options">
+        <li>Vertical plane only</li>
+        <li>360° omnidirectional pattern</li>
+        <li>90° horizontal beamwidth</li>
+        <li>5° pencil beam</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C (90° horizontal beamwidth).</strong> Sector antennas focus RF into a defined horizontal angle — common in stadium / high-density designs.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q25 &middot; SNR</p>
+    <div class="qbody">Signal at −62 dBm, noise floor at −95 dBm. SNR is:
+      <ol class="mc-options">
+        <li>33 dB</li><li>−33 dB</li><li>3.3 dB</li><li>157 dB</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>A (33 dB).</strong> SNR = signal − noise = −62 − (−95) = 33 dB.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q26 &middot; BYOD</p>
+    <div class="qbody">For a BYOD onboarding solution, Private PSK (PPSK) provides:
+      <ol class="mc-options">
+        <li>Per-user unique passphrase tied to MAC or role</li>
+        <li>Same passphrase for all clients</li>
+        <li>802.1X authentication</li>
+        <li>Open authentication</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>A.</strong> PPSK = each user/device gets a unique passphrase mapped to identity (and often role/VLAN). Better than single PSK; simpler than 802.1X.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q27 &middot; 802.11k</p>
+    <div class="qbody">802.11k Neighbor Report enables:
+      <ol class="mc-options">
+        <li>Faster channel scanning by providing client a candidate AP list</li>
+        <li>Encryption of management frames</li>
+        <li>QoS prioritization</li>
+        <li>Channel bonding to 80 MHz</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>A.</strong> 802.11k provides the client a list of neighbor APs (BSSIDs + channels), so the client doesn't have to scan every channel to find roaming candidates.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q28 &middot; Troubleshooting</p>
+    <div class="qbody">A client connects but cannot reach the internet. SW1 ARP table shows the client. What is the most likely problem layer?
+      <ol class="mc-options">
+        <li>L1 RF coverage</li><li>L2 Wi-Fi association/key</li><li>L3 routing / DHCP / DNS</li><li>L7 application</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C (L3).</strong> If ARP table shows the client, L1/L2 are OK. Cannot reach internet = L3 issue: default gateway, DNS, or NAT/firewall.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q29 &middot; 802.11ax Capability</p>
+    <div class="qbody">Which feature is NEW in 802.11ax compared to 802.11ac Wave 2?
+      <ol class="mc-options">
+        <li>256-QAM modulation</li>
+        <li>MU-MIMO (downlink)</li>
+        <li>OFDMA</li>
+        <li>5 GHz operation</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>C (OFDMA).</strong> OFDMA is a new multiple-access technique introduced in 802.11ax. 256-QAM and DL MU-MIMO existed in 802.11ac.</div></details>
+  </div>
+
+  <div class="question">
+    <p class="qnum">Q30 &middot; Vertical Markets</p>
+    <div class="qbody">A warehouse with forklifts and barcode scanners has clients moving at 25 km/h with frequent roams. Which two protocols are MOST important?
+      <ol class="mc-options">
+        <li>802.11k and 802.11r</li>
+        <li>WPA3 and OWE</li>
+        <li>DFS and 6 GHz AFC</li>
+        <li>Beamforming and MU-MIMO</li>
+      </ol>
+    </div>
+    <details class="answer"><summary>Reveal answer</summary><div class="ans-body"><strong>A (802.11k + 802.11r).</strong> Warehouse = frequent roaming. 802.11k gives the client neighbor list (faster scan); 802.11r minimizes roam latency. 802.11v BTM also helpful.</div></details>
+  </div>
+
+  <div class="scoring" style="margin-top:2rem">
+    <strong>Self-scoring guidance.</strong> Phase quiz ≥70% on first attempt with no hints = pass that phase. CWNA mock ≥21/30 (70%) suggests CWNA-108 exam readiness on these topics; below that, revisit the references map for the chapters covering missed questions. Re-take quizzes after a 2-week gap to verify retention — that's the durable-knowledge test, not the first-pass test.
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; Assessments &mdash; 6 phase quizzes + CWNA-108 mock</footer>
+</body>
+</html>
