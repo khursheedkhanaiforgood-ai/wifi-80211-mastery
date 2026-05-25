@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>References — CWNA-108 + 802.11be + EP1 | 802.11 Mastery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Libre+Franklin:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Libre Baskerville', Georgia, serif; background: #fafaf8; color: #1a1a1a; line-height: 1.7; }
+    header { border-bottom: 3px solid #1a1a1a; padding: 1.5rem 2rem 1rem; max-width: 1100px; margin: 0 auto; }
+    .byline { font-family: 'Libre Franklin', sans-serif; font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: #666; }
+    h1 { font-size: 2rem; font-weight: 700; margin: 0.3rem 0 0.4rem; }
+    .deck { font-size: 1rem; color: #444; font-style: italic; }
+    .rule { border: none; border-top: 1px solid #ccc; margin: 0.8rem 0; }
+    nav { font-family: 'Libre Franklin', sans-serif; font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; display: flex; gap: 1.2rem; flex-wrap: wrap; }
+    nav a { color: #1a1a1a; text-decoration: none; } nav a:hover { text-decoration: underline; }
+    main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+    .section-label { display: block; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #666; border-top: 3px solid #1a1a1a; padding-top: 0.4rem; margin: 2.5rem 0 1.2rem; }
+    .ref-intro { margin-bottom: 1.5rem; color: #444; font-size: 0.95rem; }
+    table { width: 100%; border-collapse: collapse; font-family: 'Libre Franklin', sans-serif; font-size: 0.85rem; margin-bottom: 2rem; background: #fff; }
+    th { text-align: left; border-bottom: 2px solid #1a1a1a; padding: 0.5rem 0.8rem; font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; background: #f7f7f4; }
+    td { padding: 0.55rem 0.8rem; border-bottom: 1px solid #e8e8e8; vertical-align: top; }
+    tr:hover td { background: #f9f9f6; }
+    td.day { white-space: nowrap; font-weight: 600; color: #1a1a1a; }
+    td code { font-family: 'SF Mono','Fira Mono',monospace; font-size: 0.78rem; background: #f3f4f6; padding: 0.1rem 0.3rem; border-radius: 2px; }
+    .pill { display: inline-block; font-family: 'Libre Franklin', sans-serif; font-size: 0.65rem; font-weight: 700; padding: 0.1rem 0.4rem; border-radius: 2px; letter-spacing: 0.05em; text-transform: uppercase; margin-right: 0.3rem; }
+    .pill-phy { background: #ccfbf1; color: #134e4a; }
+    .pill-mac { background: #fed7aa; color: #7c2d12; }
+    .pill-sec { background: #fecdd3; color: #9d174d; }
+    .pill-qos { background: #ddd6fe; color: #581c87; }
+    .pill-cap { background: #bfdbfe; color: #1d4ed8; }
+    .pill-cap6 { background: #bbf7d0; color: #065f46; }
+    .note-box { background: #fffbeb; border-left: 3px solid #b45309; padding: 0.8rem 1rem; margin: 1rem 0 1.5rem; font-family: 'Libre Franklin', sans-serif; font-size: 0.85rem; color: #78350f; }
+    .note-box strong { color: #92400e; }
+    footer { border-top: 1px solid #ccc; padding: 1rem 2rem; max-width: 1100px; margin: 0 auto; font-family: 'Libre Franklin', sans-serif; font-size: 0.72rem; color: #888; }
+    a.xlink { color: #1d4ed8; text-decoration: none; font-weight: 600; }
+    a.xlink:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+<header>
+  <p class="byline">KhKLab &nbsp;&bull;&nbsp; References &amp; Cross-Links &nbsp;&bull;&nbsp; CWNA-108 · 802.11be-2024 · EP1</p>
+  <h1>References &amp; Cross-Links</h1>
+  <p class="deck">Where every curriculum day maps in the CWNA-108 Study Guide, where every Wi-Fi 7 feature lives in 802.11be-2024, and where each topic connects to the parallel EP1 deployment work.</p>
+  <hr class="rule">
+  <nav>
+    <a href="../index.html">&larr; Home</a>
+    <a href="study_80211_index.html">Hub</a>
+    <a href="#cwna">CWNA-108 Map</a>
+    <a href="#be">802.11be Deep</a>
+    <a href="#ep1">EP1 Cross-Links</a>
+    <a href="#wlpc">WLPC Corpus Tiers</a>
+  </nav>
+</header>
+<main>
+
+  <span class="section-label" id="cwna">A. CWNA-108 Chapter Map</span>
+  <p class="ref-intro">Each curriculum day points at the CWNA-108 chapter topic that covers the same concept at exam-objective depth. Use CWNA-108 as the baseline; this curriculum goes one layer deeper into PHY/MAC mechanics and adds Wi-Fi 7 + EP1 context.</p>
+
+  <div class="note-box">
+    <strong>Verify chapter numbers in your edition.</strong> Sybex CWNA-108 (Westcott &amp; Coleman, 2020) chapter numbering shifted slightly between print and Kindle editions. Use the chapter <em>topic</em> name as the authoritative pointer.
+  </div>
+
+  <table>
+    <thead>
+      <tr><th>Phase / Day</th><th>Topic</th><th>CWNA-108 Chapter</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="day"><span class="pill pill-phy">P1.1</span></td><td>OFDM symbol structure, subcarrier spacing</td><td>Ch. on RF Fundamentals + 802.11 Standards &amp; Amendments</td><td>CWNA covers OFDM basics; curriculum goes deeper into subcarrier scaling 11a→11be.</td></tr>
+      <tr><td class="day"><span class="pill pill-phy">P1.2</span></td><td>MCS index, SNR floor, cell-edge collapse</td><td>Ch. on RF Components &amp; Mathematics + HT/VHT</td><td>CWNA gives MCS tables; curriculum derives the 10 dB step from constellation density.</td></tr>
+      <tr><td class="day"><span class="pill pill-phy">P1.3</span></td><td>Channel widths, primary/secondary signalling</td><td>Ch. on HT/VHT + 802.11ax HE</td><td>CWNA covers 80 MHz/160 MHz; curriculum adds 320 MHz (Wi-Fi 7, beyond CWNA-108).</td></tr>
+      <tr><td class="day"><span class="pill pill-phy">P1.4</span></td><td>5 GHz DFS, FCC channels, radar cascade</td><td>Ch. on RF Site Survey Fundamentals + Spread Spectrum</td><td>CWNA covers DFS concept; curriculum adds CSA frame decode + 30-min non-occupancy.</td></tr>
+      <tr><td class="day"><span class="pill pill-phy">P1.5</span></td><td>6 GHz PSC, AFC, RNR / FILS / UPR</td><td>Beyond CWNA-108 — 6 GHz added in 6E (post-108)</td><td>Use 802.11be-2024 §27 + Apple 6E PDFs. CWNA-109+ if available.</td></tr>
+      <tr><td class="day"><span class="pill pill-phy">P1.6</span></td><td>MU-MIMO vs OFDMA — when each wins</td><td>Ch. on 802.11ax HE</td><td>CWNA covers both; curriculum forces the frame-size vs spatial-separation tradeoff.</td></tr>
+      <tr><td class="day"><span class="pill pill-phy">P1.7</span></td><td>Spatial streams, TxBF sounding (NDP/NDPA)</td><td>Ch. on HT/VHT (sounding); RF Antenna Concepts</td><td>CWNA explains explicit/implicit BF; curriculum traces NDPA in a real capture.</td></tr>
+      <tr><td class="day"><span class="pill pill-phy">P1.8</span></td><td>Wi-Fi 7 PHY — 320 MHz, 4K-QAM, MLO, multi-RU</td><td>Beyond CWNA-108</td><td>802.11be-2024 §35 is authoritative. See Section B below.</td></tr>
+
+      <tr><td class="day"><span class="pill pill-mac">P2.1</span></td><td>DCF, EDCA AC queues, CWmin/CWmax/AIFSN</td><td>Ch. on 802.11 Medium Access + 802.11 MAC Architecture</td><td>CWNA covers EDCA parameter set; curriculum measures TXOP burst lengths.</td></tr>
+      <tr><td class="day"><span class="pill pill-mac">P2.2</span></td><td>NAV, RTS/CTS, MU-RTS, BSS Color</td><td>Ch. on 802.11 MAC + 802.11ax HE (BSS Color)</td><td>CWNA covers NAV; curriculum adds OBSS_PD threshold + spatial reuse decision.</td></tr>
+      <tr><td class="day"><span class="pill pill-mac">P2.3</span></td><td>A-MPDU vs A-MSDU, BlockAck windows</td><td>Ch. on HT/VHT (aggregation) + MAC Architecture</td><td>CWNA explains both forms; curriculum traces BA bitmap to subframe count.</td></tr>
+      <tr><td class="day"><span class="pill pill-mac">P2.4</span></td><td>TWT — individual, broadcast, restricted</td><td>Ch. on 802.11ax HE</td><td>CWNA introduces TWT; curriculum decodes the TWT IE in iPhone capture.</td></tr>
+      <tr><td class="day"><span class="pill pill-mac">P2.5</span></td><td>Power save — PS-Poll, U-APSD, OMI, TIM/DTIM</td><td>Ch. on MAC Architecture (Power Management)</td><td>CWNA covers PS-Poll/U-APSD; curriculum decodes TIM bitmap to per-client doze state.</td></tr>
+      <tr><td class="day"><span class="pill pill-mac">P2.6</span></td><td>Multicast/broadcast, ARP/ND, IGMP snoop</td><td>Ch. on MAC + WLAN Architecture</td><td>CWNA covers broadcast cost; curriculum quantifies the airtime hit.</td></tr>
+
+      <tr><td class="day"><span class="pill pill-sec">P3.1</span></td><td>PMKSA caching, OKC, FT (802.11r)</td><td>Ch. on 802.11 Network Security Architecture</td><td>CWNA covers 11i + 11r; curriculum draws the PMK-R0/R1 derivation tree.</td></tr>
+      <tr><td class="day"><span class="pill pill-sec">P3.2</span></td><td>SAE H2E, PT, anti-clogging</td><td>Ch. on Security (WPA3 section)</td><td>CWNA covers SAE basics; curriculum compares H2P side-channel vs H2E PT.</td></tr>
+      <tr><td class="day"><span class="pill pill-sec">P3.3</span></td><td>MFP / 802.11w / BIP — protected mgmt frames</td><td>Ch. on Security + Wireless Attacks</td><td>CWNA covers MFP concept; curriculum traces SA Query in a rogue-deauth scenario.</td></tr>
+      <tr><td class="day"><span class="pill pill-sec">P3.4</span></td><td>OWE + OWE Transition Mode</td><td>Ch. on Security (open-network section)</td><td>CWNA briefly covers OWE; curriculum decodes OWE-T IE in beacon.</td></tr>
+      <tr><td class="day"><span class="pill pill-sec">P3.5</span></td><td>802.1X EAP-TLS, server cert chain, MAC random</td><td>Ch. on Security (802.1X / EAP) + BYOD</td><td>CWNA covers EAP-TLS flow; curriculum adds MAC-randomization-vs-RADIUS conflict.</td></tr>
+      <tr><td class="day"><span class="pill pill-sec">P3.6</span></td><td>Roaming triggers — 11k, 11v BTM, Apple algo</td><td>Ch. on 802.11k/v/r (often in BYOD or roaming chapter)</td><td>CWNA covers 11k/v concept; curriculum traces BTM Request/Response.</td></tr>
+
+      <tr><td class="day"><span class="pill pill-qos">P4.1</span></td><td>DSCP↔UP mapping, WMM-UP↔AC</td><td>Ch. on QoS / WMM (within MAC chapter)</td><td>CWNA covers WMM AC; curriculum forces the DSCP=0 collapse problem.</td></tr>
+      <tr><td class="day"><span class="pill pill-qos">P4.2</span></td><td>Uplink QoS trust, downlink AC selection</td><td>Ch. on QoS (vendor-specific in CWNA)</td><td>CWNA framework only; curriculum is AP3000-specific.</td></tr>
+      <tr><td class="day"><span class="pill pill-qos">P4.3</span></td><td>Voice roaming budget — 50 ms target</td><td>Ch. on Security (FT) + Voice Engineering</td><td>CWNA gives 50 ms budget; curriculum measures the deauth-to-data delta.</td></tr>
+      <tr><td class="day"><span class="pill pill-qos">P4.4</span></td><td>Sticky clients &amp; RSSI hysteresis</td><td>Ch. on WLAN Deployment + Troubleshooting</td><td>CWNA describes the problem; curriculum measures Apple's hysteresis behavior.</td></tr>
+      <tr><td class="day"><span class="pill pill-qos">P4.5</span></td><td>Band steering, client distribution, 11v MBO</td><td>Ch. on WLAN Architecture (vendor features)</td><td>CWNA mentions band steering; curriculum compares probe-suppression vs MBO.</td></tr>
+
+      <tr><td class="day"><span class="pill pill-cap">P5.1</span></td><td>Airtime math — ToA per MCS × frame size</td><td>Ch. on WLAN Deployment + RF Site Survey</td><td>CWNA covers airtime concept; curriculum uses Rev Wi-Fi Planner XLSM.</td></tr>
+      <tr><td class="day"><span class="pill pill-cap">P5.2</span></td><td>RF coverage tiers — −67/−72/−75 dBm</td><td>Ch. on RF Site Survey Fundamentals + Site Survey Systems</td><td>CWNA covers RSSI thresholds; curriculum builds asymmetry argument.</td></tr>
+      <tr><td class="day"><span class="pill pill-cap">P5.3</span></td><td>SSID overhead — beacon airtime per SSID</td><td>Ch. on WLAN Deployment</td><td>CWNA covers SSID count guidance; curriculum quantifies with SSID Overhead Calc.</td></tr>
+      <tr><td class="day"><span class="pill pill-cap">P5.4</span></td><td>Co-channel vs adjacent-channel interference</td><td>Ch. on RF Site Survey + Spread Spectrum</td><td>CWNA covers both; curriculum forces the "Fallacy of Channel Overlap" argument.</td></tr>
+      <tr><td class="day"><span class="pill pill-cap">P5.5</span></td><td>Wi-Fi 7 capacity ceiling — MLO + multi-RU + 320</td><td>Beyond CWNA-108</td><td>802.11be-2024 §35 + Rev Wi-Fi Planner v2 Wi-Fi 7 sheet.</td></tr>
+
+      <tr><td class="day"><span class="pill pill-cap6">P6.1</span></td><td>WLPC 2026 6-process framework</td><td>Ch. on WLAN Troubleshooting</td><td>CWNA gives generic troubleshoot flow; curriculum uses WLPC 2026 framework.</td></tr>
+      <tr><td class="day"><span class="pill pill-cap6">P6.2</span></td><td>30-row causes table</td><td>Ch. on Troubleshooting</td><td>CWNA covers symptom → cause table; WLPC 2026 is more granular.</td></tr>
+      <tr><td class="day"><span class="pill pill-cap6">P6.3</span></td><td>Frame stats — retry %, BAR, IO graphs</td><td>Ch. on Troubleshooting</td><td>CWNA covers retry rate thresholds; curriculum uses WLAN Pros Wireshark profile.</td></tr>
+      <tr><td class="day"><span class="pill pill-cap6">P6.4</span></td><td>WLPC capstone incident report</td><td>Ch. on Troubleshooting (report format)</td><td>Curriculum delivers a working incident report based on May 7 DHCP event.</td></tr>
+    </tbody>
+  </table>
+
+  <span class="section-label" id="be">B. 802.11be / Wi-Fi 7 Deep References</span>
+  <p class="ref-intro">802.11be is largely beyond CWNA-108 (which preceded the amendment). The primary reference is <code>802.11be-2024.pdf</code> in the WLPC corpus Support Documents folder. Cross-reference also <code>802.11be - Wi-Fi 7.pdf</code> (vendor primer).</p>
+
+  <table>
+    <thead>
+      <tr><th>Feature</th><th>802.11be-2024 Section</th><th>Curriculum Day</th><th>What to Look For</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>EHT PPDU formats — single-user, ER, MU, TB</td><td>§35.3 (PHY)</td><td>P1.8</td><td>Compare EHT-SIG / U-SIG to HE-SIG-A/B field layout</td></tr>
+      <tr><td>320 MHz channel — only in 6 GHz</td><td>§27 + §35.5</td><td>P1.3, P1.5</td><td>EHT Operation IE — channel center frequency segment 1 / segment 2</td></tr>
+      <tr><td>4K-QAM (MCS 12, MCS 13)</td><td>§35.7 (MCS table)</td><td>P1.2, P1.8</td><td>Required SNR ~43 dB; impractical except very-close-range</td></tr>
+      <tr><td>MLO — Multi-Link Operation core</td><td>§35.3.6 + §11.55</td><td>P1.8, P5.5</td><td>TID-to-Link Mapping (TTLM); link advertisement in beacon ML element</td></tr>
+      <tr><td>MLO STR — Simultaneous Transmit/Receive</td><td>§35.3.6.2</td><td>P1.8, P4.3</td><td>Requires sufficient frequency separation between links to avoid self-interference</td></tr>
+      <tr><td>MLO NSTR — Non-STR (in-device interference)</td><td>§35.3.6.3</td><td>P1.8</td><td>Asymmetric — when one link is TX, the other must defer</td></tr>
+      <tr><td>EMLSR — Enhanced Multi-Link Single Radio</td><td>§35.3.6.4</td><td>P1.8, P4.3</td><td>Power-save fallback; only one link active at a time, but switchable fast</td></tr>
+      <tr><td>EMLMR — Enhanced Multi-Link Multi-Radio</td><td>§35.3.6.5</td><td>P1.8</td><td>Multiple radios, but coordinated rather than independent</td></tr>
+      <tr><td>Multi-RU allocation per client</td><td>§35.5.4</td><td>P1.6, P1.8</td><td>Allowed RU combinations are constrained; not arbitrary</td></tr>
+      <tr><td>Preamble puncturing — avoid blocked 20 MHz</td><td>§35.3.4</td><td>P1.3</td><td>EHT Operation IE — Disabled Subchannel Bitmap</td></tr>
+      <tr><td>Triggered Uplink Access (TUA)</td><td>§35.6</td><td>P2.1, P2.2</td><td>Trigger frame variant — extends 11ax UL OFDMA model</td></tr>
+      <tr><td>BSS Color enhancements (EHT)</td><td>§35.10</td><td>P2.2</td><td>EHT inherits + extends 11ax BSS Color; new spatial reuse rules</td></tr>
+      <tr><td>R-TWT — Restricted TWT</td><td>§35.6 (TWT extensions)</td><td>P2.4</td><td>Protects negotiated service period from non-TWT traffic</td></tr>
+      <tr><td>EHT security — SAE-PT, PASN</td><td>§12 (carried over) + §35 amendments</td><td>P3.2</td><td>SAE Password Token derivation, Pre-Association Security Negotiation</td></tr>
+      <tr><td>EHT capacity gain analysis</td><td>§Annex Z (informative)</td><td>P5.5</td><td>Combined gain from 320 MHz + 4K-QAM + MLO + multi-RU</td></tr>
+    </tbody>
+  </table>
+
+  <span class="section-label" id="ep1">C. EP1 Cross-Links — 5320-Onboarding Repo</span>
+  <p class="ref-intro">The XIQ → Extreme Platform One (EP1) deployment work lives in a parallel repository. Where this curriculum teaches a concept, the EP1 work shows how to deploy it on real Extreme gear. Branch: <code>feature/xiq-ep1-intelligence-engine</code> (will be merged to main).</p>
+
+  <table>
+    <thead>
+      <tr><th>Curriculum Topic</th><th>Connects To (5320-onboarding)</th><th>What's There</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="pill pill-sec">P3.1</span> FT/OKC roaming keying</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/ep1-deployment-guide.html">ep1-deployment-guide.html</a></td>
+        <td>EP1 Network Policy configuration — where you enable 11r on the SSID profile in EP1, including the Mobility Domain ID field</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-sec">P3.5</span> 802.1X + EAP-TLS</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/ep1-deployment-guide.html">ep1-deployment-guide.html</a></td>
+        <td>EP1 RADIUS server configuration, PPSK as a transition path before 802.1X, MAC randomization workarounds</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-sec">P3.6</span> 11k/v BTM roaming</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/ep1-deployment-guide.html">ep1-deployment-guide.html</a></td>
+        <td>Where EP1 enables 11k/v in the radio profile vs SSID profile</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-qos">P4.1–4.2</span> DSCP trust, QoS</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/xiq-ep1-arch-debate.html">xiq-ep1-arch-debate.html</a></td>
+        <td>QoS architectural decisions in EP1: where DSCP trust is set, what's lost in the XIQ→EP1 transition</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-qos">P4.4–4.5</span> Sticky clients, band steering</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/xiq-ep1-transition.html">xiq-ep1-transition.html</a></td>
+        <td>EP1 client steering policy mapping from XIQ; gaps where XIQ features don't yet have EP1 equivalent</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-cap">P5.1–5.3</span> Capacity, SSID overhead</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/xiq-ep1-intelligence-engine.html">xiq-ep1-intelligence-engine.html</a></td>
+        <td>The 31-bin XIQ baseline scrape (196 fields) — capacity-relevant fields mapped to EP1 equivalents</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-cap6">P6.1–6.3</span> WLPC framework</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/xiq-ep1-design-dialogue.html">xiq-ep1-design-dialogue.html</a></td>
+        <td>Intelligence Engine architecture — how WLPC's 6-process framework maps to the 17-agent LangGraph workflow for troubleshooting EP1 deployments</td>
+      </tr>
+      <tr>
+        <td><span class="pill pill-sec">P3.3</span> MFP + rogue management</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/ge-airdefense-xiq-sprint.html">ge-airdefense-xiq-sprint.html</a></td>
+        <td>GuestEssentials + AirDefense integration in EP1 — rogue AP detection, deauth flood protection</td>
+      </tr>
+      <tr>
+        <td>Cross-cutting — XIQ ↔ EP1 API/SNMP</td>
+        <td><a class="xlink" href="https://github.com/khursheedkhanaiforgood-ai/5320-onboarding/blob/feature/xiq-ep1-intelligence-engine/ep1-api-snmp-study.html">ep1-api-snmp-study.html</a></td>
+        <td>API and SNMP surfaces exposed by EP1, what's missing from XIQ classic</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    <strong>Why this matters.</strong> XIQ Classic GUI is retiring July 1, 2026. The EP1 work in <code>5320-onboarding</code> is mapping every feature so you don't lose deployment muscle memory during the cut-over. This curriculum teaches the theory; that repo teaches the deployment. Use them together.
+  </div>
+
+  <span class="section-label" id="wlpc">D. WLPC Corpus Tier Reminder</span>
+  <p class="ref-intro">All cited PDFs live under <code>/Users/khukhan/Downloads/WLPC Troubleshooting</code>. Tiers reflect authority, not difficulty.</p>
+
+  <table>
+    <thead>
+      <tr><th>Tier</th><th>Examples</th><th>When to Cite</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>T1 — Authoritative</strong></td>
+        <td><code>80211-2024.pdf</code> · <code>802.11be-2024.pdf</code> · <code>802.11be - Wi-Fi 7.pdf</code> · <code>WiFi-6-For-Dummies — Extreme</code> · Revolution Wi-Fi Capacity Planner · WLANPros Checklists v5 · WLPC Express 2026 PDF</td>
+        <td>Primary citation for every Socratic answer. Use first.</td>
+      </tr>
+      <tr>
+        <td><strong>T2 — Reference</strong></td>
+        <td>Aruba VHD set (Theory / Config / Planning) · Apple Wireless Documents (roaming, privacy, BYOD)</td>
+        <td>Vendor-specific deployment guidance, Apple client behavior</td>
+      </tr>
+      <tr>
+        <td><strong>T3 — Tools</strong></td>
+        <td>WLAN Pi documents · Wireshark profiles / dfilters / coloring rules · sample PCAPs (Capture 08 RADIUS over Wireless)</td>
+        <td>Lab tooling — open the PCAP, apply the profile, decode</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="note-box">
+    <strong>Privacy rule.</strong> The WLPC corpus is privately licensed. Citations only — never embed, mirror, or link the PDFs from public pages. This site cites by title and section, never by file.
+  </div>
+
+</main>
+<footer>&copy; 2026 KhKLab &nbsp;&bull;&nbsp; References &amp; Cross-Links</footer>
+</body>
+</html>
